@@ -1,0 +1,21 @@
+ProductID,Gender,Collection,ProductType,Size,Colour,Daily Rental Price,Total Price
+1,M,Winter,Trouser,XS,black,25.78,99.99
+2,M,Spring,Jacket,S,white,35.56,49.99
+3,M,Summer,Shirt,M,blue ,17.56,74.99
+4,M,Autumn,Dress,L,pink,32.21,83.99
+5,M,Winter,Tie,XL,red,16.72,42.99
+6,M,Spring,Scarf,XS,orange,19.82,40.99
+7,M,Summer,Hat,S,yellow,31.15,70.99
+8,M,Autumn,Trouser,M,black,27.31,32.99
+9,M,Winter,Jacket,L,pink,14.83,30.99
+10,M,Spring,Shirt,XL,white,15.23,41.99
+11,F,Summer,Dress,XS,purple,21.7,49.99
+12,F,Autumn,Tie,S,black,19.32,57.99
+13,F,Winter,Scarf,M,brown,13.23,101.99
+14,F,Spring,Hat,L,blue ,11.45,34.99
+15,F,Summer,Trouser,XL,red,26.89,45.98
+16,F,Autumn,Jacket,XS,white,8.79,240.99
+17,F,Winter,Shirt,S,black,12.4,25.99
+18,F,Spring,Dress,M,orange,16.23,697.99
+19,F,Summer,Tie,L,blue ,11.42,23.99
+20,F,Autumn,Hat,XL,pink,16.91,400.99
