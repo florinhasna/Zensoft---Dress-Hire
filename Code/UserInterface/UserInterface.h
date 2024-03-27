@@ -19,7 +19,7 @@ public:
     void printUpdatePriceInstruction();
     void issueProductInstruction();
     void returnProductInstruction();
-    void seeBorrowalsInstruction();
+    void seeBorrowsInstruction();
     void productStatusInstruction();
     void addCustomerInstruction();
 
@@ -46,8 +46,18 @@ public:
     // error messages, printed mainly when wrong input is given
     void invalidMenuChoiceMessage();
     void errorMessage();
-    void invalidIDMessage();
-    void invalidInput();
+    void invalidName(std::string name);
+    void invalidEmail(std::string email);
+    void invalidAddress(std::string address);
+    void invalidID(int ID);
+    void invalidPin(int PIN);
+    void invalidPrice(double price);
+    void invalidProductType(std::string productType);
+    void invalidProductName(std::string productName);
+    void invalidCollection(std::string collection);
+    void invalidGender(std::string gender);
+    void invalidSize(std::string size);
+    void invalidColour(std::string colour);
 };
 
 #endif
