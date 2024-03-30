@@ -35,7 +35,7 @@ void Application::loopLoginMenu() {
 }
 
 void Application::login() {
-
+    loopMainMenu();
 }
 
 void Application::addMerchant() {

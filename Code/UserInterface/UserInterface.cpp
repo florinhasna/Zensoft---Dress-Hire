@@ -8,7 +8,9 @@ void UserInterface::loadLogin(){
     std::cout << "1. Merchant login ..............\n";
     std::cout << "2. Create merchant account .....\n";
     std::cout << "................................\n";
-    std::cout << "0. EXIT.........................\n";
+    std::cout << "0. EXIT.........................\n\n";
+
+    std::cout << "Enter";
 }
 
 void UserInterface::loadMenu(){
@@ -20,7 +22,9 @@ void UserInterface::loadMenu(){
     std::cout << "5. Status of a product ...........\n";
     std::cout << "6. Add customer ..................\n";
     std::cout << "..................................\n";
-    std::cout << "0. EXIT ..........................\n";
+    std::cout << "0. EXIT ..........................\n\n";
+
+    std::cout << "Enter";
 }
 
 void UserInterface::loadStockManagementMenu(){
@@ -29,7 +33,9 @@ void UserInterface::loadStockManagementMenu(){
     std::cout << "2. Remove product ................\n";
     std::cout << "3. Update rental price ...........\n";
     std::cout << "..................................\n";
-    std::cout << "0. EXIT ..........................\n";
+    std::cout << "0. EXIT ..........................\n\n";
+
+    std::cout << "Enter";
 }
 
 void UserInterface::printAddProductInstruction(){

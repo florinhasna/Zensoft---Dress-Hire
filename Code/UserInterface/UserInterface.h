@@ -1,6 +1,7 @@
 #ifndef _USERINTERFACE_H_
 #define _USERINTERFACE_H_
 #include "../Utilities/Utilities.h"
+#include "../Utilities/Utilities.cpp"
 
 class UserInterface{
 public:

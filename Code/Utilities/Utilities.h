@@ -4,7 +4,4 @@
 #include <string>
 #include <vector>
 
-template <typename T>
-T getInput();
-
 #endif
