@@ -42,6 +42,8 @@ public:
 
     // message when the user chooses to abort an action
     void abortMessage();
+    void exitProgram();
+    void logout();
 
     // error messages, printed mainly when wrong input is given
     void invalidMenuChoiceMessage();

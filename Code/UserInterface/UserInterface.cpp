@@ -76,72 +76,72 @@ void UserInterface::addCustomerInstruction(){
 // the relevant data
 std::string UserInterface::getNameInput(){
     std::cout << "\nEnter name";
-    return "";
+    return getInput<std::string>();
 }
 
 std::string UserInterface::getEmailInput(){
     std::cout << "\nEnter email";
-    return "";
+    return getInput<std::string>();
 }
 
 std::string UserInterface::getAddressInput(){
     std::cout << "\nEnter address";
-    return "";
+    return getInput<std::string>();
 }
 
 int UserInterface::getIDInput(){
     std::cout << "\nEnter ID";
-    return 0;
+    return getInput<int>();
 }
 
 int UserInterface::getPinInput(){
     std::cout << "\nEnter PIN number";
-    return 0;
+    return getInput<int>();
 }
 
 double UserInterface::getPriceInput(){
     std::cout << "\nEnter price";
-    return 0;
+    return getInput<double>();
 }
 
 std::string UserInterface::getProductTypeInput(){
     std::cout << "\nEnter product type";
-    return "";
+    return getInput<std::string>();
 }
 
 std::string UserInterface::getProductNameInput(){
     std::cout << "\nEnter product name";
-    return "";
+    return getInput<std::string>();
 }
 
 std::string UserInterface::getCollectionInput(){
     std::cout << "\nEnter collection";
-    return "";
+    return getInput<std::string>();
 }
 
 std::string UserInterface::getGenderInput(){
     std::cout << "\nEnter gender";
-    return "";
+    return getInput<std::string>();
 }
 
 std::string UserInterface::getSizeInput(){
     std::cout << "\nEnter size";
-    return "";
+    return getInput<std::string>();
 }
 
 std::string UserInterface::getColourInput(){
     std::cout << "\nEnter colour";
-    return "";
+    return getInput<std::string>();
 }
 
 double UserInterface::getDailyRentalPriceInput(){
     std::cout << "\nEnter daily rental price";
-    return 0;
+    return getInput<double>();
 }
 
 double UserInterface::getFullPriceInput(){
     std::cout << "\nEnter full price";
-    return 0;
+    return getInput<double>();
 }
 
 // message when the user chooses to abort an action
@@ -155,6 +155,14 @@ void UserInterface::invalidMenuChoiceMessage(){
 
 void UserInterface::errorMessage(){
     std::cout << "\nAn error has occurred, please try again later...\n";
+}
+
+void UserInterface::exitProgram() {
+    std::cout << "\nExiting...\n";
+}
+
+void UserInterface::logout() {
+    std::cout << "\nLogging out...\n";
 }
 
 void UserInterface::invalidName(std::string name){

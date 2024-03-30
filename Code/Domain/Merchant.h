@@ -3,7 +3,7 @@
 
 #include "Person.h" 
 #include "Customer.h" 
-#include "Product.h" 
+#include "Product.h"
 
 class Merchant : public Person {
 private:

@@ -1,10 +1,10 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
-#include <vector>
+#include "Person.h"
 #include "Product.h" 
 
-class Customer {
+class Customer : public Person {
 private:
     std::vector<Product*> productsLoaned;
 
