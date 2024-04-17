@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Hash.h"
 
 class Date{
 
@@ -21,7 +22,7 @@ public:
     void setDueDate(const Date& aDate); 
 
     
-}
+};
 
 
 
