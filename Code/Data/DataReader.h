@@ -15,6 +15,7 @@ struct Product {
 // Declaration of the DataReader class
 class DataReader {
 public:
+    DataReader();
     explicit DataReader(const std::string& filePath);
     std::vector<Product> readProducts();
 

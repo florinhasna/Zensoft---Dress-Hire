@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iostream>
 
+DataReader::DataReader(){}
 DataReader::DataReader(const std::string& filePath) : filePath(filePath) {}
 
 std::vector<Product> DataReader::readProducts() {
@@ -52,21 +53,21 @@ std::vector<Product> DataReader::readProducts() {
     return products;
 }
 
-// Main function for testing purposes
-int main() {
-    DataReader reader("C:\\Users\\Khalil\\Desktop\\2550 CW Reading from a data file\\Products.csv");
-    auto products = reader.readProducts();
+// // Main function for testing purposes
+// int main() {
+//     DataReader reader("C:\\Users\\Khalil\\Desktop\\2550 CW Reading from a data file\\Products.csv");
+//     auto products = reader.readProducts();
 
-    for (const auto& product : products) {
-        std::cout << "Product ID: " << product.productID
-                  << ", Gender: " << product.gender
-                  << ", Collection: " << product.collection
-                  << ", Product Type: " << product.productType
-                  << ", Size: " << product.size
-                  << ", Colour: " << product.colour
-                  << ", Daily Rental Price: " << product.dailyRentalPrice
-                  << ", Total Price: " << product.totalPrice << std::endl;
-    }
+//     for (const auto& product : products) {
+//         std::cout << "Product ID: " << product.productID
+//                   << ", Gender: " << product.gender
+//                   << ", Collection: " << product.collection
+//                   << ", Product Type: " << product.productType
+//                   << ", Size: " << product.size
+//                   << ", Colour: " << product.colour
+//                   << ", Daily Rental Price: " << product.dailyRentalPrice
+//                   << ", Total Price: " << product.totalPrice << std::endl;
+//     }
 
-    return 0;
-}
+//     return 0;
+// }
