@@ -4,7 +4,7 @@
 
 int main() {
     UserInterface ui;
-    DataReader data;
+    DataReader data("Products.csv");
     Application application(ui, data);
 
     application.start();

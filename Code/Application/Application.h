@@ -2,10 +2,6 @@
 #define _APPLICATION_H_
 #include "../UserInterface/UserInterface.h"
 #include "../Data/DataReader.h"
-//#include "../Domain/Person.h"
-//#include "../Domain/Merchant.h"
-//#include "../Domain/Customer.h"
-//#include "../Domain/Product.h"
 
 class Application {
 private:
