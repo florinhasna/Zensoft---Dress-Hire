@@ -1,26 +1,23 @@
 #ifndef DATA_READER_H
 #define DATA_READER_H
-#include "../Utilities/Utilities.h"
+
 #include <vector>
 #include <string>
+#include "Product.h"
+#include "Customer.h"
+#include "Person.h"
+#include "Merchant.h"
 
-// Define a structure to hold product information
-struct Product {
-    int productID;
-    char gender;
-    std::string collection, productType, size, colour;
-    double dailyRentalPrice, totalPrice;
-};
 
-// Declaration of the DataReader class
 class DataReader {
 public:
-    DataReader();
     explicit DataReader(const std::string& filePath);
     std::vector<Product> readProducts();
+    std::vector<Merchant> readMerchants();
+    std::vector<Customer> readCustomers(); 
 
 private:
     std::string filePath;
 };
 
-#endif // DATA_READER_H
+#endif 
