@@ -2,20 +2,21 @@
 #define CUSTOMER_H
 
 #include "Person.h"
-#include "Product.h" 
+#include "Product.h"
+#include <vector>
+
 
 class Customer : public Person {
 private:
     std::vector<Product*> productsLoaned;
 
 public:
-    Customer();
-    ~Customer(); // Destructor for managing dynamic memory, if necessary
+    Customer(const std::string& name, const std::string& email, const std::string& address, const std::string& ID);
+    ~Customer();
 
-    int getCustomerReference() const;
     std::vector<Product*> getProductsLoaned() const;
     void loanProduct(Product* aProduct);
     void returnProduct(Product* aProduct);
 };
 
-#endif 
+#endif
