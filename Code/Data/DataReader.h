@@ -3,14 +3,12 @@
 
 #include <vector>
 #include <string>
-#include "Product.h"
-#include "Customer.h"
-#include "Person.h"
-#include "Merchant.h"
+#include "../Domain/Merchant.h"
 
 
 class DataReader {
 public:
+    DataReader();
     explicit DataReader(const std::string& filePath);
     std::vector<Product> readProducts();
     std::vector<Merchant> readMerchants();

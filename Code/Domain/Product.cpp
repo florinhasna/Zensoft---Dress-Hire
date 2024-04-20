@@ -8,8 +8,8 @@ Product::Product(int productID, const std::string& gender, const std::string& co
     : productID(productID), gender(gender), collection(collection),
       productType(productType), productName(productName), size(size),
       colour(colour), dailyRentalPrice(dailyRentalPrice), fullPrice(fullPrice),
-      isAvailable(true), dateOfBorrowal(Utilities::getCurrentDate()), 
-      dueDate(Utilities::getCurrentDate()) {}
+      isAvailable(true), dateOfBorrowal(), 
+      dueDate() {}
 
 //getters
 int Product::getProductID() const {
@@ -111,12 +111,12 @@ void Product::setDueDate(const Date& newDueDate) {
 
 //methods
 double Product::calculateTotalForBorrowal() const {
-    int daysBorrowed = Utilities::daysBetween(dateOfBorrowal, Utilites::getCurrentDate());
-    return daysBorrowed * dailyRentalPrice;
+    // int daysBorrowed = Utilities::daysBetween(dateOfBorrowal, Utilites::getCurrentDate());
+    // return daysBorrowed * dailyRentalPrice;
 }
 
 bool Product::isLate() const {
-    return Utilities::isAfter(Utilities::getCurrentDate(), dueDate);
+    // return Utilities::isAfter(Utilities::getCurrentDate(), dueDate);
 }
 
 std::string Product::toString() const {
@@ -130,8 +130,8 @@ std::string Product::toString() const {
            << "Colour: " << getProductColour() << "\n"
            << "Daily Rental Price: " << getDailyRentalPrice() << "\n"
            << "Full Price: " << getFullPrice() << "\n"
-           << "Available: " << (getIsAvailable() ? "Yes" : "No") << "\n"
-           << "Date of Borrowal: " << Utilities::toString(getDateOfBorrowal()) << "\n"
-           << "Due Date: " << Utilities::toString(getDueDate());
+           << "Available: " << (getIsAvailable() ? "Yes" : "No") << "\n";
+        //    << "Date of Borrowal: " << Utilities::toString(getDateOfBorrowal()) << "\n"
+        //    << "Due Date: " << Utilities::toString(getDueDate());
     return stream.str();
 }

@@ -4,7 +4,7 @@
 #include <iostream>
 
 DataReader::DataReader(const std::string& filePath) : filePath(filePath) {}
-
+DataReader::DataReader(){}
 
 std::vector<Product> DataReader::readProducts() {
     std::ifstream file(filePath);
@@ -107,48 +107,48 @@ std::vector<Merchant> DataReader::readMerchants() {
 }
 
 
-// Update the main function to demonstate reading from products, merchants, and customers
-int main() {
-    DataReader productReader("C:\\Users\\Khalil\\Desktop\\2550 CW Reading from a data file\\CSV\\Products.csv");
-    auto products = productReader.readProducts();
-    DataReader merchantReader("C:\\Users\\Khalil\\Desktop\\2550 CW Reading from a data file\\CSV\\Merchants.csv");
-    auto merchants = merchantReader.readMerchants();
-    DataReader customerReader("C:\\Users\\Khalil\\Desktop\\2550 CW Reading from a data file\\CSV\\Customers.csv");
-    auto customers = customerReader.readCustomers();
+// // Update the main function to demonstate reading from products, merchants, and customers
+// int main() {
+//     DataReader productReader("C:\\Users\\Khalil\\Desktop\\2550 CW Reading from a data file\\CSV\\Products.csv");
+//     auto products = productReader.readProducts();
+//     DataReader merchantReader("C:\\Users\\Khalil\\Desktop\\2550 CW Reading from a data file\\CSV\\Merchants.csv");
+//     auto merchants = merchantReader.readMerchants();
+//     DataReader customerReader("C:\\Users\\Khalil\\Desktop\\2550 CW Reading from a data file\\CSV\\Customers.csv");
+//     auto customers = customerReader.readCustomers();
 
-    for (const auto& product : products) {
-    std::cout << "Product ID: " << product.getProductID()
-              << ", Gender: " << product.getGender()
-              << ", Collection: " << product.getCollection()
-              << ", Product Type: " << product.getProductType()
-              << ", Name: " << product.getProductName()  
-              << ", Size: " << product.getProductSize()
-              << ", Colour: " << product.getProductColour()
-              << ", Daily Rental Price: $" << product.getDailyRentalPrice()
-              << ", Full Price: $" << product.getFullPrice()
-              << std::endl;
-}
-
-
-    for (const auto& merchant : merchants) {
-    std::cout << "Merchant ID: " << merchant.getStaffID()  // Using getStaffID() to fetch merchant ID
-              << ", Name: " << merchant.getName()
-              << ", Address: " << merchant.getAddress()
-              << ", Email: " << merchant.getEmail()
-              << ", PIN: " << merchant.getPIN()
-              << std::endl;
-}
+//     for (const auto& product : products) {
+//     std::cout << "Product ID: " << product.getProductID()
+//               << ", Gender: " << product.getGender()
+//               << ", Collection: " << product.getCollection()
+//               << ", Product Type: " << product.getProductType()
+//               << ", Name: " << product.getProductName()  
+//               << ", Size: " << product.getProductSize()
+//               << ", Colour: " << product.getProductColour()
+//               << ", Daily Rental Price: $" << product.getDailyRentalPrice()
+//               << ", Full Price: $" << product.getFullPrice()
+//               << std::endl;
+// }
 
 
+//     for (const auto& merchant : merchants) {
+//     std::cout << "Merchant ID: " << merchant.getStaffID()  // Using getStaffID() to fetch merchant ID
+//               << ", Name: " << merchant.getName()
+//               << ", Address: " << merchant.getAddress()
+//               << ", Email: " << merchant.getEmail()
+//               << ", PIN: " << merchant.getPIN()
+//               << std::endl;
+// }
 
 
-    for (const auto& customer : customers) {
-        std::cout << "Customer ID: " << customer.getID()  
-                  << ", Name: " << customer.getName()    
-                  << ", Address: " << customer.getAddress() 
-                  << ", Email: " << customer.getEmail()  
-                  << std::endl;
-    }
 
-    return 0;
-}
+
+//     for (const auto& customer : customers) {
+//         std::cout << "Customer ID: " << customer.getID()  
+//                   << ", Name: " << customer.getName()    
+//                   << ", Address: " << customer.getAddress() 
+//                   << ", Email: " << customer.getEmail()  
+//                   << std::endl;
+//     }
+
+//     return 0;
+// }

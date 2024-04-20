@@ -1,8 +1,6 @@
 #ifndef MERCHANT_H
 #define MERCHANT_H
 
-#include "Person.h"
-#include "Product.h"
 #include "Customer.h" 
 
 class Merchant : public Person {
