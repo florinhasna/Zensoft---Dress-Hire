@@ -1,9 +1,10 @@
 #include "Person.h"
 
-Person::Person() : ID(0) {} // initializing the ID field to 0 in the default constructor of the Person class
+Person::Person() : ID("") {}
 
-Person::Person(const std::string& name, const std::string& email, const std::string& address, int ID)
+Person::Person(const std::string& name, const std::string& email, const std::string& address, const std::string& ID)
     : name(name), email(email), address(address), ID(ID) {}
+
 
 std::string Person::getName() const {
     return name;
@@ -29,10 +30,10 @@ void Person::setAddress(const std::string& newAddress) {
     address = newAddress;
 }
 
-int Person::getID() const {
+std::string Person::getID() const {
     return ID;
 }
 
-void Person::setID(int newID) {
+void Person::setID(const std::string& newID) {
     ID = newID;
 }
