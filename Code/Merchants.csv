@@ -1,1 +1,6 @@
-
+MerchantID,Name,Address,Email,PIN
+M1234,Shelly,E31 4NE,Shelly@gmail.com,S1234
+M1235,Liam,G14 9EZ,Martin@gmail.com,L1234
+M1236,Kay,W1W 6RT,Kay@gmail.com,K1234
+M1237,Bob,C33 9AX,Bob@gmail.oom,B1234
+M1238,Ahmed,L13 9JL,Ahmed@gmail.com,A1234
