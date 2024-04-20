@@ -1,20 +1,14 @@
 #include "Customer.h"
+ 
 
-Customer::Customer() {
-    // Constructor 
-}
+Customer::Customer(const std::string& name, const std::string& email, const std::string& address, const std::string& ID)
+    : Person(name, email, address, ID) {}
 
 Customer::~Customer() {
-    // Destructor implementation
-    // If using raw pointers, need to deallocate memory to prevent memory leaks
     for (Product* product : productsLoaned) {
-        delete product; // Delete the pointed-to Product
+        delete product;
     }
     productsLoaned.clear();
-}
-
-int Customer::getCustomerReference() const {
-    return 0; 
 }
 
 std::vector<Product*> Customer::getProductsLoaned() const {
