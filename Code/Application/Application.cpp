@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "../Utilities/Utilities.h"
 
 Application::Application(UserInterface ui, DataReader d){
     this->UI = ui;
@@ -35,10 +36,80 @@ void Application::loopLoginMenu() {
 }
 
 void Application::login() {
-    loopMainMenu();
+    DataReader dataReader("Merchants.csv"); 
+    std::vector<Merchant> merchants = dataReader.readMerchants();
+
+    std::string name, pin;
+    bool loginSuccess = false;
+   const int maxLoginAttempts = 3;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    for (int attempts = 1; attempts <= maxLoginAttempts; attempts++) { 
+        std::cout << "Enter Merchant Name: ";
+        std::getline(std::cin, name);
+        
+        std::cout << "Enter PIN: ";
+        std::getline(std::cin, pin);
+
+        for (const auto& merchant : merchants) {
+            if (merchant.getName() == name && merchant.getPIN() == pin) {
+                std::cout << "Login successful!" << std::endl;
+                loginSuccess = true;
+                loopMainMenu();
+                return; 
+            }
+        }
+
+        if (!loginSuccess) {
+            if (attempts == maxLoginAttempts) {
+                std::cout << "Maximum login attempts reached. Access denied." << std::endl;
+                return;
+            } else {
+                std::cout << "Invalid name or PIN. Please try again." << std::endl;
+            }
+        }
+    }
 }
 
 void Application::addMerchant() {
+  std::string name, address, email, pin;
+    
+std::cout << "Enter Name: ";
+std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+std::getline(std::cin, name);  
+while (!ValidateName(name)) {
+    std::cout << "ddd " << name;
+    std::cout << "Invalid name. Please enter a valid name (e.g., John Doe): ";
+    std::getline(std::cin, name); 
+}
+
+
+    std::cout << "Enter Postcode: ";
+   std::getline(std::cin, address); 
+     while (!ValidatePostcode(address)) {
+        std::cout << "Invalid Postcode. Please enter a valid Postcode (e.g., kt4 3eg): ";
+     std::getline(std::cin, address);
+    }
+     
+    std::cout << "Enter Email: ";
+    std::getline(std::cin, email); 
+        while (!ValidateEmail(email)) {
+        std::cout << "Invalid email. Please enter a valid email (e.g., example@example.com): ";
+        std::getline(std::cin, email);
+    }
+	
+    std::cout << "Enter PIN (4-digit number): ";
+    std::getline(std::cin, pin); 
+   while (!ValidatePIN(pin)) {
+        std::cout << "Invalid PIN. Please enter a 4-digit number: ";
+       std::getline(std::cin, pin); 
+    }
+
+    std::string staffID = generateMemberID(name);
+       
+    Merchant newMerchant(name, email, address, staffID, pin);  
+    //function to write to csv missing  
+
+      std::cout << "Merchant added successfully with ID: " << staffID << std::endl;
 
 }
 

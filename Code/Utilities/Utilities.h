@@ -10,6 +10,7 @@
 #include <string>
 #include <iomanip>
 #include "Hash.h"
+#include <random>
 
 class Date{
 
@@ -29,9 +30,11 @@ private:
     
 };
 
-// bool testName(std::string name);
-// bool testAddress(std::string address);
-// bool testEmail(std::string email);
 
+inline bool ValidateName(const std::string& name);
+inline bool ValidatePostcode(const std::string& address);
+inline bool ValidateEmail(const std::string& email);
+inline bool ValidatePIN(const std::string& pin); 
+std::string generateMemberID(const std::string& name);
 
 #endif
