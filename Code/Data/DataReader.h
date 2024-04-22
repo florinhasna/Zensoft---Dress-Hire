@@ -9,13 +9,15 @@
 class DataReader {
 public:
     DataReader();
-    explicit DataReader(const std::string& filePath);
+    explicit DataReader(const std::string& filePathProducts, const std::string& filePathMerchants, const std::string& filePathCustomers);
     std::vector<Product> readProducts();
     std::vector<Merchant> readMerchants();
     std::vector<Customer> readCustomers(); 
 
 private:
-    std::string filePath;
+    std::string filePathProducts;
+    std::string filePathMerchants;
+    std::string filePathCustomers;
 };
 
 #endif 

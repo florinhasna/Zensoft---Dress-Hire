@@ -13,10 +13,6 @@ private:
     void login();
     void addMerchant();
     void loopMainMenu();
-    void loopStockManagement();
-    void addProduct();
-    void removeProduct();
-    void updateProductPrice();
     void issueProduct();
     void returnProduct();
     void seeBorrows();

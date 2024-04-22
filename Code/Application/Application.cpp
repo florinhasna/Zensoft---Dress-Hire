@@ -1,5 +1,4 @@
 #include "Application.h"
-#include "../Utilities/Utilities.h"
 
 Application::Application(UserInterface ui, DataReader d){
     this->UI = ui;
@@ -36,8 +35,7 @@ void Application::loopLoginMenu() {
 }
 
 void Application::login() {
-    DataReader dataReader("Merchants.csv"); 
-    std::vector<Merchant> merchants = dataReader.readMerchants();
+    std::vector<Merchant> merchants = this->data.readMerchants();
 
     std::string name, pin;
     bool loginSuccess = false;
@@ -121,43 +119,14 @@ void Application::loopMainMenu() {
 
         switch (choice) {
             case 0: this->getUI().logout(); break;
-            case 1: loopStockManagement(); break;
-            case 2: issueProduct(); break;
-            case 3: returnProduct(); break;
-            case 4: seeBorrows(); break;
-            case 5: seeProductStatus(); break;
-            case 6: addCustomer(); break;
+            case 1: issueProduct(); break;
+            case 2: returnProduct(); break;
+            case 3: seeBorrows(); break;
+            case 4: seeProductStatus(); break;
+            case 5: addCustomer(); break;
             default: this->getUI().invalidMenuChoiceMessage();
         }
     } while (choice != 0);
-}
-
-void Application::loopStockManagement() {
-    int choice;
-    do {
-        this->getUI().loadStockManagementMenu();
-        choice = getInput<int>();
-
-        switch (choice) {
-            case 0: this->getUI().abortMessage(); break;
-            case 1: addProduct(); break;
-            case 2: removeProduct(); break;
-            case 3: updateProductPrice(); break;
-            default: this->getUI().invalidMenuChoiceMessage();
-        }
-    } while (choice != 0);
-}
-
-void Application::addProduct() {
-    this->getUI().printAddProductInstruction();
-}
-
-void Application::removeProduct() {
-    this->getUI().printRemoveProductInstruction();
-}
-
-void Application::updateProductPrice() {
-    this->getUI().printUpdatePriceInstruction();
 }
 
 void Application::issueProduct() {

@@ -11,13 +11,9 @@ public:
     // menus
     void loadLogin();
     void loadMenu();
-    void loadStockManagementMenu();
 
     // instructions messages, printed first when a menu option
     // is chosen
-    void printAddProductInstruction();
-    void printRemoveProductInstruction();
-    void printUpdatePriceInstruction();
     void issueProductInstruction();
     void returnProductInstruction();
     void seeBorrowsInstruction();
@@ -32,14 +28,6 @@ public:
     int getIDInput();
     int getPinInput();
     double getPriceInput();
-    std::string getProductTypeInput();
-    std::string getProductNameInput();
-    std::string getCollectionInput();
-    std::string getGenderInput();
-    std::string getSizeInput();
-    std::string getColourInput();
-    double getDailyRentalPriceInput();
-    double getFullPriceInput();
 
     // message when the user chooses to abort an action
     void abortMessage();
@@ -55,12 +43,6 @@ public:
     void invalidID(int ID);
     void invalidPin(int PIN);
     void invalidPrice(double price);
-    void invalidProductType(std::string productType);
-    void invalidProductName(std::string productName);
-    void invalidCollection(std::string collection);
-    void invalidGender(std::string gender);
-    void invalidSize(std::string size);
-    void invalidColour(std::string colour);
 };
 
 #endif

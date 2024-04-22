@@ -15,41 +15,15 @@ void UserInterface::loadLogin(){
 
 void UserInterface::loadMenu(){
     std::cout << "\nPlease choose an option from the following list:\n";
-    std::cout << "1. Stock management ..............\n";
-    std::cout << "2. Issue a product ...............\n";
-    std::cout << "3. Return a product ..............\n";
-    std::cout << "4. See customer's borrows ........\n";
-    std::cout << "5. Status of a product ...........\n";
-    std::cout << "6. Add customer ..................\n";
+    std::cout << "1. Issue a product ...............\n";
+    std::cout << "2. Return a product ..............\n";
+    std::cout << "3. See customer's borrows ........\n";
+    std::cout << "4. Status of a product ...........\n";
+    std::cout << "5. Add customer ..................\n";
     std::cout << "..................................\n";
     std::cout << "0. EXIT ..........................\n\n";
 
     std::cout << "Enter";
-}
-
-void UserInterface::loadStockManagementMenu(){
-    std::cout << "\nPlease choose an option from the following list:\n";
-    std::cout << "1. Add product ...................\n";
-    std::cout << "2. Remove product ................\n";
-    std::cout << "3. Update rental price ...........\n";
-    std::cout << "..................................\n";
-    std::cout << "0. EXIT ..........................\n\n";
-
-    std::cout << "Enter";
-}
-
-void UserInterface::printAddProductInstruction(){
-    std::cout << "\nTo add a product, details like product type, product name,\n";
-    std::cout << "collection, gender, size, colour, daily rental price and full\n";
-    std::cout << "price.\n";
-}
-
-void UserInterface::printRemoveProductInstruction(){
-    std::cout << "\nTo remove a product, the product's ID is required.\n";
-}
-
-void UserInterface::printUpdatePriceInstruction(){
-    std::cout << "\nTo update the price of a product, the product ID is required.\n";
 }
 
 void UserInterface::issueProductInstruction(){
@@ -110,46 +84,6 @@ double UserInterface::getPriceInput(){
     return getInput<double>();
 }
 
-std::string UserInterface::getProductTypeInput(){
-    std::cout << "\nEnter product type";
-    return getInput<std::string>();
-}
-
-std::string UserInterface::getProductNameInput(){
-    std::cout << "\nEnter product name";
-    return getInput<std::string>();
-}
-
-std::string UserInterface::getCollectionInput(){
-    std::cout << "\nEnter collection";
-    return getInput<std::string>();
-}
-
-std::string UserInterface::getGenderInput(){
-    std::cout << "\nEnter gender";
-    return getInput<std::string>();
-}
-
-std::string UserInterface::getSizeInput(){
-    std::cout << "\nEnter size";
-    return getInput<std::string>();
-}
-
-std::string UserInterface::getColourInput(){
-    std::cout << "\nEnter colour";
-    return getInput<std::string>();
-}
-
-double UserInterface::getDailyRentalPriceInput(){
-    std::cout << "\nEnter daily rental price";
-    return getInput<double>();
-}
-
-double UserInterface::getFullPriceInput(){
-    std::cout << "\nEnter full price";
-    return getInput<double>();
-}
-
 // message when the user chooses to abort an action
 void UserInterface::abortMessage(){
     std::cout << "\nAction cancelled, going back...\n";
@@ -199,32 +133,4 @@ void UserInterface::invalidPin(int PIN){
 
 void UserInterface::invalidPrice(double price){
     std::cout << "\nThe price \"£" << price << "\" is invalid.\n";
-}
-
-void UserInterface::invalidProductType(std::string productType){
-    std::cout << "\nThe product type \"" << productType << "\" is invalid.\n";
-}
-
-void UserInterface::invalidProductName(std::string productName){
-    std::cout << "\nThe product name \"" << productName << "\" is invalid.\n";
-}
-
-void UserInterface::invalidCollection(std::string collection){
-    std::cout << "\nThe collection \"" << collection << "\" is invalid.\n";
-    std::cout << "Please enter: Summer, Autumn, Winter or Spring.\n";
-}
-
-void UserInterface::invalidGender(std::string gender){
-    std::cout << "\nThe gender \"" << gender << "\" is invalid.\n";
-    std::cout << "Please enter Male or Female.\n";
-}
-
-void UserInterface::invalidSize(std::string size){
-    std::cout << "\nThe size \"" << size << "\" is invalid.\n";
-    std::cout << "Please enter XS, S, M, L, etc.\n";
-}
-
-void UserInterface::invalidColour(std::string colour){
-    std::cout << "\nThe colour \"" << colour << "\" is invalid.\n";
-    std::cout << "Please enter Red, Green, Blue, etc.\n";
 }
