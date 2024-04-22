@@ -13,7 +13,7 @@ private:
 public:
     Person();  // Default constructor
     Person(const std::string& name, const std::string& email, const std::string& address, const std::string& ID);  // Constructor with parameters
-
+    virtual ~Person() = default;
     std::string getName() const;
     void setName(const std::string& newName);
     std::string getEmail() const;

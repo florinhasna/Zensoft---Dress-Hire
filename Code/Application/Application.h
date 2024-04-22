@@ -2,6 +2,7 @@
 #define _APPLICATION_H_
 #include "../UserInterface/UserInterface.h"
 #include "../Data/DataReader.h"
+#include "../UserInterface/UserInterface.h"
 #include <unordered_map>
 
 class Application {

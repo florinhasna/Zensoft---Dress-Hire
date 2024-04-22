@@ -20,13 +20,23 @@ public:
     void productStatusInstruction();
     void addCustomerInstruction();
 
+    static std::string LoginSuccesfull();
+    static std::string LoginUnsuccesfull();
+    static std::string MaximumLoginAttemps();
+    static std::string RegistrationSuccesfull();
+    static std::string CustomerRegistrationSuccesfull();
+
     // methods used to read inputs from user and returns
     // the relevant data
-    std::string getNameInput();
-    std::string getEmailInput();
-    std::string getAddressInput();
-    int getIDInput();
-    int getPinInput();
+    static std::string getMerchantIDInput();
+    static std::string getNameInput();
+    static std::string getEmailInput();
+    static std::string getAddressInput();
+    static std::string getIDInput();
+    static std::string getPinInput();
+    static std::string getGenderInput();
+    static std::string getAgeInput();
+    static std::string getphoneNumberInput();
     double getPriceInput();
 
     // message when the user chooses to abort an action
@@ -37,11 +47,14 @@ public:
     // error messages, printed mainly when wrong input is given
     void invalidMenuChoiceMessage();
     void errorMessage();
-    void invalidName(std::string name);
-    void invalidEmail(std::string email);
-    void invalidAddress(std::string address);
-    void invalidID(int ID);
-    void invalidPin(int PIN);
+    static void invalidName(const std::string& name);
+    static void invalidEmail(const std::string& email);
+    static void invalidAddress(const std::string& address);
+    static void invalidID(const std::string& ID);
+    static void invalidPin(const std::string& PIN);
+    static void invalidgender(const std::string& gender);
+    static void invalidAge(const std::string& age);
+    static void invalidphoneNumber(const std::string& phoneNumber);
     void invalidPrice(double price);
 };
 

@@ -54,14 +54,56 @@ inline bool ValidatePIN(const std::string &pin){
     return regex_match(pin, pin_pattern);
 }
 
-inline std::string generateMemberID(const std::string &name){
+inline bool ValidateGender(const std::string &gender){
+    std::regex gender_pattern("^(Male|Female)$", std::regex_constants::icase);
+    return std::regex_match(gender, gender_pattern);
+}
+
+inline bool ValidatephoneNumber(const std::string &phoneNumber){
+    std::regex phone_pattern("^(\\+44\\s?7\\d{3}|07\\d{3})\\s?\\d{3}\\s?\\d{3}$");
+    return std::regex_match(phoneNumber, phone_pattern);
+}
+
+inline bool Validateage(const std::string &age){
+    std::regex age_pattern("^(\\d{1,3})$");
+    return std::regex_match(age, age_pattern);
+}
+
+
+// inline std::string generateMemberID(const std::string &name){
+//     if (name.empty())
+//         return "";
+//     std::random_device rd;
+//     std::mt19937 rng(rd());
+//     std::uniform_int_distribution<int> uni(1000, 9999);
+//     char firstLetter = std::toupper(name[0]);
+//     int randomNumbers = uni(rng);
+
+//     return firstLetter + std::to_string(randomNumbers);
+// }
+
+template <typename T>
+inline std::string generateMemberID(const std::vector<T>& existingItems, const std::string &name) {
     if (name.empty())
         return "";
-    std::random_device rd;
-    std::mt19937 rng(rd());
-    std::uniform_int_distribution<int> uni(1000, 9999);
-    char firstLetter = std::toupper(name[0]);
-    int randomNumbers = uni(rng);
 
-    return firstLetter + std::to_string(randomNumbers);
+    std::string newID;
+    bool isUnique;
+    do {
+        // Random ID generation logic remains the same
+        std::random_device rd;
+        std::mt19937 rng(rd());
+        std::uniform_int_distribution<int> uni(1000, 9999);
+        char firstLetter = std::toupper(name[0]);
+        int randomNumbers = uni(rng);
+        newID = firstLetter + std::to_string(randomNumbers);
+
+        // Check if this newID is unique among existingItems
+        isUnique = std::none_of(existingItems.begin(), existingItems.end(),
+            [&newID](const T& item) {
+                return item.getID() == newID; // T must have a getID() method
+            });
+    } while (!isUnique);
+
+    return newID;
 }

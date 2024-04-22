@@ -35,6 +35,10 @@ inline bool ValidateName(const std::string& name);
 inline bool ValidatePostcode(const std::string& address);
 inline bool ValidateEmail(const std::string& email);
 inline bool ValidatePIN(const std::string& pin); 
-std::string generateMemberID(const std::string& name);
+inline bool ValidateGender(const std::string& gender); 
+inline bool Validateage(const std::string& age); 
+inline bool ValidatephoneNumber(const std::string& phoneNumber); 
+template <typename T>
+std::string generateMemberID(const std::vector<T>& existingItems, const std::string &name);
 
 #endif
