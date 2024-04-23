@@ -1,6 +1,7 @@
 #ifndef _UTILITIES_H_
 #define _UTILITIES_H_
 
+#include <Hash.h>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -9,23 +10,25 @@
 #include <ctime>
 #include <string>
 #include <iomanip>
-#include "Hash.h"
 #include <random>
 
 class Date{
 
-private:
-    std::string date; //date in string format 
+// private:
+//     std::string date; //date in string format 
+//     std::string dueDate;
+//     std::string addDays(const std::string &borrowDate, int rentalDays) const;
+
 
 // public:
-    // Date(const std::string& date);
+//     Date(const std::string& date);
 //     Date();
 
 //     std::string getDateOfBorrowal() const;
 //     std::string getDueDate() const;
 
-//     void setDateOfBorrowal(const Date& aDate);
-//     void setDueDate(const Date& aDate); 
+//     void setDateOfBorrowal(const std::string& aDate);
+//     void setDueDate(const int rentalDays); 
 
     
 };
