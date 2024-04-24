@@ -89,7 +89,7 @@ std::string UserInterface::RegistrationSuccesfull()
 
 std::string UserInterface::CustomerRegistrationSuccesfull()
 {
-    std::string message = "Merchant added successfully with ID: ";
+    std::string message = "Customer added successfully with ID: ";
     std::cout << message;
     return message;
 }
