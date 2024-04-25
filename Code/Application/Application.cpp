@@ -69,45 +69,43 @@ void Application::loopLoginMenu()
     } while (choice != 0);
 }
 
-void Application::login()
-{
-    std::vector<Merchant> merchants = this->data.readMerchants();
 
+void Application::login() {
     std::string merchantID, pin;
     bool loginSuccess = false;
     const int maxLoginAttempts = 3;
+    
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    for (int attempts = 1; attempts <= maxLoginAttempts; attempts++)
-    {
+    
+    for (int attempts = 0; attempts < maxLoginAttempts; attempts++) {
         merchantID = UserInterface::getMerchantIDInput();
-
         pin = UserInterface::getPinInput();
 
-        for (const auto &merchant : merchants)
-        {
-            if (merchant.getStaffID() == merchantID && merchant.getPIN() == pin)
-            {
-                UserInterface::LoginSuccesfull();
-                loginSuccess = true;
-                loopMainMenu();
-                return;
-            }
-        }
-
-        if (!loginSuccess)
-        {
-            if (attempts == maxLoginAttempts)
-            {
-                UserInterface::MaximumLoginAttemps();
-                return;
-            }
-            else
-            {
+        // Check if merchant exists in  merchanthastables
+        if (merchantHashTable.contains(merchantID)) {
+            try {
+                const Merchant& merchant = merchantHashTable.get(merchantID);
+                if (merchant.getPIN() == pin) {
+                    UserInterface::LoginSuccesfull();
+                    loginSuccess = true;
+                    loopMainMenu();
+                    break;
+                } else {
+                    UserInterface::LoginUnsuccesfull();
+                }
+            } catch (const std::exception& e) {
                 UserInterface::LoginUnsuccesfull();
             }
+        } else {
+           UserInterface::LoginUnsuccesfull();
+        }
+
+        if (!loginSuccess && attempts == maxLoginAttempts - 1) {
+            UserInterface::MaximumLoginAttemps();
         }
     }
 }
+
 
 void Application::addMerchant()
 {
@@ -143,10 +141,10 @@ void Application::addMerchant()
 
     std::vector<Merchant> merchants = this->data.readMerchants();
     std::string merchantID = generateMemberID(merchants, name);
-    // std::string staffID = generateMemberID(name);
 
     Merchant newMerchant(name, email, address, merchantID, pin);
     DataReader::AppendMerchantToCSV("Merchants.csv", newMerchant);
+   merchantHashTable.put(merchantID, std::move(newMerchant));
     UserInterface::RegistrationSuccesfull();
     std::cout << merchantID << std::endl;
 }
@@ -342,6 +340,7 @@ void Application::addCustomer()
     std::string CustomerID = generateMemberID(Customers, name);
     Customer newCustomer(name, address, CustomerID, email, gender, age, phoneNumber);
     DataReader::AppendCustomerToCSV("Customers.csv", newCustomer);
+    customerHashTable.put(CustomerID, std::move(newCustomer));
     UserInterface::CustomerRegistrationSuccesfull();
     std::cout << CustomerID << std::endl;
 }
