@@ -12,23 +12,33 @@
 #include <iomanip>
 #include <random>
 
+
+template <typename T>
+T getInput()
+{
+    T input;
+    std::cout << " > ";
+    std::cin >> input;
+    return input;
+}
+
 class Date{
 
-// private:
-//     std::string date; //date in string format 
-//     std::string dueDate;
-//     std::string addDays(const std::string &borrowDate, int rentalDays) const;
+private:
+    std::string date; //date in string format 
+    std::string dueDate;
+    std::string addDays(const std::string &borrowDate, int rentalDays) const;
 
 
-// public:
-//     Date(const std::string& date);
-//     Date();
+public:
+    Date(const std::string& date);
+    Date();
 
-//     std::string getDateOfBorrowal() const;
-//     std::string getDueDate() const;
+    std::string getDateOfBorrowal() const;
+    std::string getDueDate() const;
 
-//     void setDateOfBorrowal(const std::string& aDate);
-//     void setDueDate(const int rentalDays); 
+    void setDateOfBorrowal(const std::string& aDate);
+    void setDueDate(const int rentalDays); 
 
     
 };

@@ -5,59 +5,59 @@
 #include <iomanip>
 
 
-template <typename T>
-T getInput()
-{
-    T input;
-    std::cout << " > ";
-    std::cin >> input;
-    return input;
+// template <typename T>
+// T getInput()
+// {
+//     T input;
+//     std::cout << " > ";
+//     std::cin >> input;
+//     return input;
+// }
+
+//initialises the member variable date with the
+//value of the date parameter passed to the constructor.
+Date::Date(const std::string& date) : date(date) , dueDate("") {}
+Date::Date() : date(""), dueDate("") {}
+
+std::string Date::getDateOfBorrowal() const{
+    return date;
 }
 
-// //initialises the member variable date with the
-// //value of the date parameter passed to the constructor.
-// Date::Date(const std::string& date) : date(date) , dueDate("") {}
-// Date::Date() : date(""), dueDate("") {}
+std::string Date::getDueDate() const{
+    return dueDate ;
+}
 
-// std::string Date::getDateOfBorrowal() const{
-//     return date;
-// }
+void Date::setDateOfBorrowal(const std::string& aDate){
+    date = aDate;
+}
 
-// std::string Date::getDueDate() const{
-//     return dueDate ;
-// }
+void Date::setDueDate(const int rentalDays){
+    if (!date.empty()){
+        dueDate = addDays(date, rentalDays);
+    }
+}
 
-// void Date::setDateOfBorrowal(const std::string& aDate){
-//     date = aDate;
-// }
-
-// void Date::setDueDate(const int rentalDays){
-//     if (!date.empty()){
-//         dueDate = addDays(date, rentalDays);
-//     }
-// }
-
-// //method adds days to the given borrow date
-// std::string Date::addDays(const std::string &borrowDate, int rentalDays) const{
-//     std::tm tm={};
-//     std::istringstream ss(borrowDate);
-//     ss >> std::get_time(&tm,"%d-%m-%Y");
+//method adds days to the given borrow date
+std::string Date::addDays(const std::string &borrowDate, int rentalDays) const{
+    std::tm tm={};
+    std::istringstream ss(borrowDate);
+    ss >> std::get_time(&tm,"%d-%m-%Y");
     
-//     //handle error
-//     if (ss.fail()){
-//         throw std::runtime_error("Failed to parse data");
-//     }
+    //handle error
+    if (ss.fail()){
+        throw std::runtime_error("Failed to parse data");
+    }
 
-//     //convert rental days to seconds then
-//     //add them to borrow date  
-//     std::time_t time = std::mktime(&tm) + rentalDays * 86400; 
-//     std::tm *newTm = std::localtime(&time);
-//     std::ostringstream oss;
-//     oss << std::put_time(newTm, "%d-%m-%Y");
+    //convert rental days to seconds then
+    //add them to borrow date  
+    std::time_t time = std::mktime(&tm) + rentalDays * 86400; 
+    std::tm *newTm = std::localtime(&time);
+    std::ostringstream oss;
+    oss << std::put_time(newTm, "%d-%m-%Y");
     
-//     return oss.str();
+    return oss.str();
 
-// }
+}
 
 
 bool ValidateName(const std::string &rawName){
