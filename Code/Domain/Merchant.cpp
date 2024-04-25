@@ -22,14 +22,21 @@ void Merchant::setStaffID(const std::string& newStaffID) {
     staffID = newStaffID;
 }
 
-void Merchant::issueProduct(Customer& customer, Product& product) {
+void Merchant::issueProduct(Customer* customer, Product* product) {
     // Implementation for issuing a product to a customer
+    customer->loanProduct(product);
+    product->setIsAvailable(false);
+    product->setBorrowedBy(customer->getID());
+
 }
 
-void Merchant::returnProduct(Customer& customer, Product& product) {
+void Merchant::returnProduct(Customer* customer, Product* product) {
     // Implementation for returning a product from a customer
+    customer->returnProduct(product);
+    product->setIsAvailable(true);
+    product->setBorrowedBy("");
 }
 
-void Merchant::calculateFine(Product& product) {
+void Merchant::calculateFine(Product* product) {
     // Implementation for calculating fines
 }

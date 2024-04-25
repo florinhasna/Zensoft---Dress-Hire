@@ -18,9 +18,9 @@ public:
     std::string getStaffID() const;  
     void setStaffID(const std::string& newStaffID);  
 
-    void issueProduct(Customer& customer, Product& product);
-    void returnProduct(Customer& customer, Product& product);
-    void calculateFine(Product& product);
+    void issueProduct(Customer* customer, Product* product);
+    void returnProduct(Customer* customer, Product* product);
+    void calculateFine(Product* product);
 };
 
 #endif
