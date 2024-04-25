@@ -4,6 +4,24 @@ Application::Application(UserInterface ui, DataReader d)
 {
     this->UI = ui;
     this->data = d;
+
+    // Read and insert products
+    auto products = d.readProducts();
+    for (const auto& product : products) {
+        productHashTable.put(product.getProductID(), product);
+    }
+
+    // Read and insert merchants
+    auto merchants = d.readMerchants();
+    for (const auto& merchant : merchants) {
+        merchantHashTable.put(merchant.getStaffID(), merchant);
+    }
+
+    // Read and insert customers
+    auto customers = d.readCustomers();
+    for (const auto& customer : customers) {
+        customerHashTable.put(customer.getID(), customer);
+    }
 }
 
 Application::~Application() {}
