@@ -5,8 +5,8 @@
 #include "../Domain/Merchant.h"
 #include "../Domain/Product.h"
 #include "../Domain/Customer.h"
-
 #include "../Data/DataReader.h" // Update the path as necessary
+
 #include <fstream>
 #include <vector>
 #include <string>
@@ -168,44 +168,75 @@ bool fileExists(const std::string& filename) {
 }
 
 // Test case for appending new merchant and customer data to existing CSV files
-TEST_CASE("Append Merchant Data to Existing CSV File", "[DataReader]") {
+TEST_CASE("Append Merchant and Customer Data to Existing CSV Files", "[DataReader]") {
     // Define filenames for existing CSV files
     std::string productsFile = "TEST"; 
     std::string merchantsFile = "../Merchants.csv";
-    std::string customersFile = "TEST";
+    std::string customersFile = "../Customers.csv"; // Update the path as necessary
 
     // Create DataReader object - needs 3 args
     DataReader dataReader(productsFile, merchantsFile, customersFile);
 
-    // Define data for new merchant and customer
+    // Define data for new merchant
     std::string newMerchantName = "New Merchant";
     std::string newMerchantEmail = "new_merchant@example.com";
     std::string newMerchantAddress = "123 New Street";
-    std::string newMerchantStaffID = "M1234";
+    std::string newMerchantStaffID = "M12345";
     std::string newMerchantPIN = "1234";
 
+    // Define data for new customer
+    std::string newCustomerName = "New Customer";
+    std::string newCustomerAddress = "456 Old Road";
+    std::string newCustomerID = "C67890";
+    std::string newCustomerEmail = "new_customer@example.com";
+    std::string newCustomerGender = "Non-Binary";
+    std::string newCustomerAge = "40";
+    std::string newCustomerPhoneNumber = "+1234567890";
 
+    // Append new merchant data to existing CSV file
+    dataReader.AppendMerchantToCSV(merchantsFile, Merchant(newMerchantName, newMerchantEmail, newMerchantAddress, newMerchantStaffID, newMerchantPIN));
 
-    // Append new merchant and customer data to existing CSV files
-dataReader.AppendMerchantToCSV(merchantsFile, Merchant(newMerchantName, newMerchantEmail, newMerchantAddress, newMerchantStaffID, newMerchantPIN));
+    // Append new customer data to existing CSV file
+    dataReader.AppendCustomerToCSV(customersFile, Customer(newCustomerName, newCustomerAddress, newCustomerID, newCustomerEmail, newCustomerGender, newCustomerAge, newCustomerPhoneNumber));
 
-// Verify that the data was successfully appended
-REQUIRE(fileExists(merchantsFile)); // Check if merchants file still exists
+    // Verify that the data was successfully appended
+    REQUIRE(fileExists(merchantsFile)); // Check if merchants file still exists
+    REQUIRE(fileExists(customersFile)); // Check if customers file still exists
 
-// Read back the updated data
-std::vector<Merchant> updatedMerchants = dataReader.readMerchants();
-// Check if the new merchant data was added
-bool newMerchantFound = false;
-for (const auto& merchant : updatedMerchants) { 
-    if (merchant.getName() == newMerchantName &&
-        merchant.getEmail() == newMerchantEmail &&
-        merchant.getAddress() == newMerchantAddress &&
-        merchant.getStaffID() == newMerchantStaffID &&
-        merchant.getPIN() == newMerchantPIN) {
-        newMerchantFound = true;
-        break;
+    // Read back the updated data
+    std::vector<Merchant> updatedMerchants = dataReader.readMerchants();
+    std::vector<Customer> updatedCustomers = dataReader.readCustomers();
+
+    // Check if the new merchant data was added
+    bool newMerchantFound = false;
+    for (const auto& merchant : updatedMerchants) {
+        if (merchant.getName() == newMerchantName &&
+            merchant.getEmail() == newMerchantEmail &&
+            merchant.getAddress() == newMerchantAddress &&
+            merchant.getStaffID() == newMerchantStaffID &&
+            merchant.getPIN() == newMerchantPIN) {
+            newMerchantFound = true;
+            break;
+        }
     }
-}
-REQUIRE(newMerchantFound);
 
+    // Check if the new customer data was added
+    bool newCustomerFound = false;
+    for (const auto& customer : updatedCustomers) {
+        if (customer.getName() == newCustomerName &&
+            customer.getEmail() == newCustomerEmail &&
+            customer.getAddress() == newCustomerAddress &&
+            customer.getID() == newCustomerID &&
+            customer.getGender() == newCustomerGender &&
+            customer.getAge() == newCustomerAge &&
+            customer.getPhoneNumber() == newCustomerPhoneNumber) {
+            newCustomerFound = true;
+            break;
+        }
+    }
+
+    REQUIRE(newMerchantFound); // Ensure new merchant was added successfully
+    REQUIRE(newCustomerFound); // Ensure new customer was added successfully
 }
+
+
