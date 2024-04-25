@@ -6,6 +6,7 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <iostream>
 
 // Template class for Linear Probing Hash Table
 template <typename K, typename V>
@@ -49,33 +50,45 @@ public:
         return *values[index];
     }
 
-    // Resizes the hash table to the new size and rehashes all key-value pairs
     void resize(size_t new_size) {
-        std::optional<K>* new_keys = new std::optional<K>[new_size];
-        std::unique_ptr<V>* new_values = new std::unique_ptr<V>[new_size];
+    std::optional<K>* new_keys = new std::optional<K>[new_size];
+    std::unique_ptr<V>* new_values = new std::unique_ptr<V>[new_size];
 
-        for (size_t i = 0; i < capacity; ++i) {
-            if (key_list[i].has_value()) {
-                size_t new_index = std::hash<K>{}(*key_list[i]) % new_size;  // Compute new index for each key
-                new_keys[new_index] = key_list[i];
-                new_values[new_index] = std::move(values[i]);
+    size_t old_capacity = capacity;
+    // Temporarily set capacity to new_size to use in pos function
+    capacity = new_size;
+
+    for (size_t i = 0; i < old_capacity; ++i) {
+        if (key_list[i].has_value()) {
+            size_t new_index = std::hash<K>{}(*key_list[i]) % new_size; // Directly compute new index
+            while (new_keys[new_index].has_value()) {  // Handle collision during rehash
+                new_index = (new_index + 1) % new_size;
             }
+            new_keys[new_index] = key_list[i];
+            new_values[new_index] = std::move(values[i]);
         }
-
-        delete[] key_list;  // Free old arrays
-        delete[] values;
-        key_list = new_keys;  // Replace with new arrays
-        values = new_values;
-        capacity = new_size;  // Update capacity
     }
 
-    // Computes the position for a key using linear probing to resolve any clashes
+    delete[] key_list;
+    delete[] values;
+    key_list = new_keys;
+    values = new_values;
+    // Reset capacity after all data is rehashed
+    capacity = new_size;
+    std::cout << "Resized: New capacity = " << capacity << ", Items = " << qty << std::endl;
+}
+
+
+
     size_t pos(const K& key) {
-        size_t index = std::hash<K>{}(key) % capacity;
-        while (key_list[index].has_value() && key_list[index] != key)
-            index = (index + 1) % capacity;
-        return index;
+    size_t index = std::hash<K>{}(key) % capacity;
+    while (key_list[index].has_value() && key_list[index] != key) {
+        index = (index + 1) % capacity;
+        if (index == capacity) index = 0;  // Wrap around if the end of the array is reached
     }
+    return index;
+}
+
 
     // Returns a vector of all keys stored in the hash table
     std::vector<K> keys() {
