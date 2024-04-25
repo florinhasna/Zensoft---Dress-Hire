@@ -23,6 +23,7 @@ private:
     void seeBorrows();
     void seeProductStatus();
     void addCustomer();
+    Customer* getACustomer();
 public:
     Application(UserInterface ui, DataReader d);
     ~Application();
