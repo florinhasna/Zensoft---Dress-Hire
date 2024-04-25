@@ -97,23 +97,36 @@ void DataReader::AppendMerchantToCSV(const std::string& filename, const Merchant
 
 
 std::vector<Customer> DataReader::readCustomers() {
+    std::ifstream file(filePathCustomers);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << filePathCustomers << std::endl;
+        return {};
+    }
+
     std::vector<Customer> customers;
     std::string line;
-    std::ifstream file("customers.txt");
+    std::getline(file, line); 
 
-    while (getline(file, line)) {
-        std::istringstream iss(line);
-        std::string name, address, ID, email, gender, age, phoneNumber;
+    while (std::getline(file, line)) {
+        std::istringstream s(line);
+        std::string ID, name, address, email, gender, age, phoneNumber;
 
-        if (!(iss >> name >> address >> ID >> email >> gender >> age >> phoneNumber)) { 
-            break;
-        }
+        std::getline(s, ID, ',');
+        std::getline(s, name, ',');
+        std::getline(s, address, ',');
+        std::getline(s, email, ',');
+        std::getline(s, gender, ',');
+        std::getline(s, age, ',');
+        std::getline(s, phoneNumber, ',');
 
+        
         customers.push_back(Customer(name, address, ID, email, gender, age, phoneNumber));
     }
 
+    file.close();
     return customers;
 }
+
 
 
 void DataReader::AppendCustomerToCSV(const std::string& filename, const Customer& customer) {
