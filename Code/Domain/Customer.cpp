@@ -26,3 +26,13 @@ void Customer::returnProduct(Product* aProduct) {
         productsLoaned.erase(it);
     }
 }
+
+std::string Customer::toString() {
+    std::string aString = "";
+    aString += "\n\tCustomer reference number: " + this->getID();
+    aString += "\n\tCustomer name: " + this->getName();
+    aString += "\n\tCustomer address: " + this->getAddress();
+    aString += "\n\tCustomer email: " + this->getEmail();
+    aString += "\n\tCustomer phone no.: " + this->getPhoneNumber();
+    return aString;
+}

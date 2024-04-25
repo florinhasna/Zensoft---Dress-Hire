@@ -26,6 +26,7 @@ public:
     std::vector<Product*> getProductsLoaned() const;
     void loanProduct(Product* aProduct);
     void returnProduct(Product* aProduct);
+    std::string toString();
 };
 
 #endif
