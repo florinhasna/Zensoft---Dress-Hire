@@ -3,149 +3,89 @@
 
 #include <optional>
 #include <vector>
+#include <memory>
+#include <stdexcept>
+#include <string>
 
+// Template class for Linear Probing Hash Table
 template <typename K, typename V>
 class LinearProbingHash {
 private:
-  std::optional<K>* key_list;
-  V* values;
-  size_t qty;
-  size_t capacity;
+    std::optional<K>* key_list;  // Array to store keys using optional for empty or removed slots
+    std::unique_ptr<V>* values;  // Array to store values using smart pointers for automatic memory management
+    size_t qty;                  // Current number of elements stored in the hash table
+    size_t capacity;             // Maximum capacity of the hash table
 
 public:
-  LinearProbingHash() {
-    capacity = 100;
-    qty = 0;
-    key_list = new std::optional<K>[capacity];
-    values = new V[capacity];
-    for (size_t i = 0; i < capacity; ++i) {
-      key_list[i] = {};
-      values[i] = 0;
-    }
-  }
+    // Constructor initializes hash table with a default size of 100
+    LinearProbingHash() : key_list(new std::optional<K>[100]), values(new std::unique_ptr<V>[100]), qty(0), capacity(100) {}
 
-  ~LinearProbingHash() {
-    delete[] key_list;
-    delete[] values;
-  }
-
-  size_t size() {
-    return qty;
-  }
-
-  bool empty() {
-    return qty == 0;
-  }
-
-  bool contains(K key) {
-    return key_list[pos(key)].has_value();
-  }
-
-  size_t pos(K key) {
-    size_t index = std::hash<K>{}(key) % capacity;
-    while (key_list[index].has_value() && *key_list[index] != key)
-      index = (index + 1) % capacity;
-    return index;
-  }
-
-  void put(K key, V value) {
-    size_t index = pos(key);
-
-    if (!key_list[index].has_value()) {
-      key_list[index] = std::optional<K>{key};
-      ++qty;
+    // Destructor cleans up allocated memory
+    ~LinearProbingHash() {
+        delete[] key_list;
+        delete[] values;
     }
 
-    values[index] = value;
-
-    if (qty >= capacity/2)
-      resize(2*capacity);
-  }
-
-  V get(K key) {
-    size_t index = pos(key);
-    return *key_list[index];
-  }
-
-  V& operator[](K key) {
-    if (!contains(key))
-      put(key, V());
-
-    size_t index = pos(key);
-    return values[index];
-  }
-
-  void resize(size_t newsize) {
-    std::optional<K>* oldkeys = key_list;
-    V* oldvalues = values;
-    size_t old_capacity = capacity;
-
-    key_list = new std::optional<K>[newsize];
-    values = new V[newsize];
-    for (size_t i = 0; i < newsize; ++i) {
-      key_list[i] = {};
-      values[i] = 0;
+    // Adds a key-value pair to the hash table or updates the value if the key already exists
+    void put(const K& key, V value) {
+        size_t index = pos(key);
+        if (!key_list[index].has_value()) {
+            key_list[index] = key;  // Insert new key if the slot is empty
+            values[index] = std::make_unique<V>(std::move(value));  // Uses smart pointer to manage the new value
+            qty++;
+        } else {
+            values[index] = std::make_unique<V>(std::move(value));  
+        }
+        if (qty >= capacity / 2)  // Resize if load factor exceeds 0.5
+            resize(capacity * 2);
     }
 
-    capacity = newsize;
-    qty = 0;
-
-    for (size_t i = 0; i < old_capacity; ++i) {
-      if (oldkeys[i].has_value())
-        put(*oldkeys[i], oldvalues[i]);
+    // Retrieves a reference to the value associated with a key
+    V& get(const K& key) {
+        size_t index = pos(key);
+        if (!values[index]) {  // Throw an exception if the key does not exist
+            throw std::runtime_error("Attempted to access non-existing key.");
+        }
+        return *values[index];
     }
 
-    delete[] oldkeys;
-    delete[] oldvalues;
-  }
+    // Resizes the hash table to the new size and rehashes all key-value pairs
+    void resize(size_t new_size) {
+        std::optional<K>* new_keys = new std::optional<K>[new_size];
+        std::unique_ptr<V>* new_values = new std::unique_ptr<V>[new_size];
 
-  void remove(K key) {
-    size_t index = pos(key);
-    if (!key_list[index].has_value())
-      return;
+        for (size_t i = 0; i < capacity; ++i) {
+            if (key_list[i].has_value()) {
+                size_t new_index = std::hash<K>{}(*key_list[i]) % new_size;  // Compute new index for each key
+                new_keys[new_index] = key_list[i];
+                new_values[new_index] = std::move(values[i]);
+            }
+        }
 
-    // remove this item
-    key_list[index] = {};
-    values[index] = V();
-    --qty;
-
-    // rehash and reinsert any items in a cluster with the deleted item
-    for (size_t i = (index+1) % capacity; key_list[i].has_value();
-         i = (i+1) % capacity) {
-      K rekey = *key_list[i];
-      V revalue = values[i];
-      --qty;
-
-      put(rekey, revalue);
+        delete[] key_list;  // Free old arrays
+        delete[] values;
+        key_list = new_keys;  // Replace with new arrays
+        values = new_values;
+        capacity = new_size;  // Update capacity
     }
 
-    // if capacity is too large halve it
-    if (qty > 0 && qty <= capacity/8)
-      resize(capacity/2);
-  }
+    // Computes the position for a key using linear probing to resolve any clashes
+    size_t pos(const K& key) {
+        size_t index = std::hash<K>{}(key) % capacity;
+        while (key_list[index].has_value() && key_list[index] != key)
+            index = (index + 1) % capacity;
+        return index;
+    }
 
-  std::vector<K> keys() {
-    std::vector<K> thekeys;
-    for (size_t i = 0; i < capacity; ++i)
-      if (key_list[i].has_value())
-        thekeys.push_back(*key_list[i]);
-    return thekeys;
-  }
+    // Returns a vector of all keys stored in the hash table
+    std::vector<K> keys() {
+        std::vector<K> thekeys;
+        for (size_t i = 0; i < capacity; ++i) {
+            if (key_list[i].has_value())
+                thekeys.push_back(*key_list[i]);
+        }
+        return thekeys;
+    }
 };
 
-
-template <typename K, typename V>
-struct Node {
-  K key;
-  V value;
-  Node<K,V>* next;
-
-  Node(K key, V value, Node<K,V>* next) {
-    this->key = key;
-    this->value = value;
-    this->next = next;
-  }
-};
-
-
-#endif
+#endif // _HASH_HPP_
