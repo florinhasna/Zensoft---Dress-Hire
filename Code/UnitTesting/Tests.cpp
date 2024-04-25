@@ -181,7 +181,7 @@ TEST_CASE("Append Merchant Data to Existing CSV File", "[DataReader]") {
     std::string newMerchantName = "New Merchant";
     std::string newMerchantEmail = "new_merchant@example.com";
     std::string newMerchantAddress = "123 New Street";
-    std::string newMerchantStaffID = "M12345";
+    std::string newMerchantStaffID = "M1234";
     std::string newMerchantPIN = "1234";
 
 
