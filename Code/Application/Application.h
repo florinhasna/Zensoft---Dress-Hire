@@ -9,6 +9,7 @@ class Application {
 private:
     UserInterface UI;
     DataReader data;
+    Merchant* loggedIn = nullptr;
     // Initialize hash tables for Products, Merchants, and Customers
     LinearProbingHash<int, Product> productHashTable; // For products with int IDs
     LinearProbingHash<std::string, Merchant> merchantHashTable; // For merchants with string IDs
@@ -24,6 +25,7 @@ private:
     void seeProductStatus();
     void addCustomer();
     Customer* getACustomer();
+    Product* getAProduct();
 public:
     Application(UserInterface ui, DataReader d);
     ~Application();

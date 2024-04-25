@@ -69,43 +69,54 @@ void Application::loopLoginMenu()
     } while (choice != 0);
 }
 
-
-void Application::login() {
+void Application::login()
+{
     std::string merchantID, pin;
     bool loginSuccess = false;
     const int maxLoginAttempts = 3;
-    
+
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    
-    for (int attempts = 0; attempts < maxLoginAttempts; attempts++) {
+
+    for (int attempts = 0; attempts < maxLoginAttempts; attempts++)
+    {
         merchantID = UserInterface::getMerchantIDInput();
         pin = UserInterface::getPinInput();
 
         // Check if merchant exists in  merchanthastables
-        if (merchantHashTable.contains(merchantID)) {
-            try {
-                const Merchant& merchant = merchantHashTable.get(merchantID);
-                if (merchant.getPIN() == pin) {
+        if (merchantHashTable.contains(merchantID))
+        {
+            try
+            {
+                Merchant *merchant = &merchantHashTable.get(merchantID);
+                if (merchant->getPIN() == pin)
+                {
                     UserInterface::LoginSuccesfull();
                     loginSuccess = true;
+                    loggedIn = merchant;
                     loopMainMenu();
                     break;
-                } else {
+                }
+                else
+                {
                     UserInterface::LoginUnsuccesfull();
                 }
-            } catch (const std::exception& e) {
+            }
+            catch (const std::exception &e)
+            {
                 UserInterface::LoginUnsuccesfull();
             }
-        } else {
-           UserInterface::LoginUnsuccesfull();
+        }
+        else
+        {
+            UserInterface::LoginUnsuccesfull();
         }
 
-        if (!loginSuccess && attempts == maxLoginAttempts - 1) {
+        if (!loginSuccess && attempts == maxLoginAttempts - 1)
+        {
             UserInterface::MaximumLoginAttemps();
         }
     }
 }
-
 
 void Application::addMerchant()
 {
@@ -144,7 +155,7 @@ void Application::addMerchant()
 
     Merchant newMerchant(name, email, address, merchantID, pin);
     DataReader::AppendMerchantToCSV("Merchants.csv", newMerchant);
-   merchantHashTable.put(merchantID, std::move(newMerchant));
+    merchantHashTable.put(merchantID, std::move(newMerchant));
     UserInterface::RegistrationSuccesfull();
     std::cout << merchantID << std::endl;
 }
@@ -191,7 +202,8 @@ void Application::issueProduct()
     // initialise a Customer pointer
     Customer *aCustomerPtr = this->getACustomer();
 
-    if(aCustomerPtr == nullptr) {
+    if (aCustomerPtr == nullptr)
+    {
         return;
     }
 
@@ -213,24 +225,9 @@ void Application::issueProduct()
 
     std::vector<Product *> products;
     for (int i = 0; i < items; i++)
-    {            
-        // to be repeated for every item
-        int pID; // holdin a product ID
-        do
-        {
-            // read in the ID of a product
-            pID = this->getUI().getProductIDInput();
-
-            // if the choice is to abort
-            if (pID == 0)
-            {
-                this->getUI().abortMessage();
-                return;
-            }
-        } while (!productHashTable.contains(pID)); // until a product is found
-
+    {
         // assing the product address to a pointer
-        Product *aProduct = &productHashTable.get(pID);
+        Product *aProduct = this->getAProduct();
 
         if (aProduct->getIsAvailable())
         { // check availability
@@ -246,10 +243,7 @@ void Application::issueProduct()
     // print confirmation
     for (Product *p : products)
     {
-        // add the products loaned in the customer vector
-        aCustomerPtr->loanProduct(p);
-        // update availability
-        p->setIsAvailable(false);
+        loggedIn->issueProduct(aCustomerPtr, p);
 
         // set price
         price += p->getDailyRentalPrice();
@@ -257,7 +251,8 @@ void Application::issueProduct()
         this->getUI().printProductConfirmation(p->getProductName() + " " + p->getProductSize() + " - " + p->getCollection());
     }
 
-    if(products.size() != 0) {
+    if (products.size() != 0)
+    {
         this->getUI().printTotalPay(price);
     }
 }
@@ -265,30 +260,100 @@ void Application::issueProduct()
 void Application::returnProduct()
 {
     this->getUI().returnProductInstruction();
+
+    // get the customer
+    Customer *aCustomer = this->getACustomer();
+
+    if (aCustomer == nullptr) // aborting
+    {
+        return;
+    }
+
+    std::string choice;
+    do
+    {
+        // if the customer does not have any loaned products
+        if (aCustomer->getProductsLoaned().empty())
+        {
+            this->getUI().noProductsLoaned(aCustomer->getName());
+            break;
+        }
+
+        // print the products
+        for (Product *p : aCustomer->getProductsLoaned())
+        {
+            std::cout << p->toString() << std::endl;
+        }
+
+        // get the product input
+        Product *aProduct = this->getAProduct();
+
+        // aborting
+        if(aProduct == nullptr) {
+            return;
+        }
+
+        // return the product
+        loggedIn->returnProduct(aCustomer, aProduct);
+
+        // if the customer has no more products loaned, exit the loop
+        if (aCustomer->getProductsLoaned().size() == 0)
+        {
+            this->getUI().noMoreProducts(aCustomer->getName());
+            break;
+        }
+
+        // return more products prompt
+        choice = this->getUI().isReturningMore();
+        if (choice == "N" || choice == "n")
+        {
+        }
+        else
+        {
+            this->getUI().errorMessage();
+            choice = this->getUI().isReturningMore();
+        }
+    } while (choice == "Y" || choice == "y");
 }
 
 void Application::seeBorrows()
 {
     this->getUI().seeBorrowsInstruction();
 
-    Customer* aCustomer = this->getACustomer();
+    Customer *aCustomer = this->getACustomer();
 
-    if (aCustomer == nullptr) {
+    if (aCustomer == nullptr)
+    {
         return;
     }
 
     auto borrows = aCustomer->getProductsLoaned();
 
-    std::cout << "\nBorrows:";
-    for (auto borrow : borrows) {
-        std::cout << borrow->getProductName() << " " << borrow->getProductSize() << " - " 
-        << borrow->getCollection() << std::endl;
+    std::cout << "\nBorrows:\n";
+    for (auto borrow : borrows)
+    {
+        std::cout << borrow->toString();
     }
 }
 
 void Application::seeProductStatus()
 {
     this->getUI().productStatusInstruction();
+
+    Product *aProduct = this->getAProduct();
+
+    if (aProduct == nullptr)
+    {
+        return;
+    }
+
+    if (aProduct->getIsAvailable()) {
+        std::cout << "The product is currently available\n";
+    } else {
+        std::cout << "Borrowed by: " << aProduct->getBorrowedBy() << std::endl;
+    }
+    
+    std::cout << aProduct->toString();
 }
 
 void Application::addCustomer()
@@ -340,12 +405,11 @@ void Application::addCustomer()
     std::string CustomerID = generateMemberID(Customers, name);
     Customer newCustomer(name, address, CustomerID, email, gender, age, phoneNumber);
     DataReader::AppendCustomerToCSV("Customers.csv", newCustomer);
-    customerHashTable.put(CustomerID, std::move(newCustomer));
     UserInterface::CustomerRegistrationSuccesfull();
     std::cout << CustomerID << std::endl;
 }
 
-Customer* Application::getACustomer()
+Customer *Application::getACustomer()
 {
     // read from user an ID input for a customer
     std::cin.ignore();
@@ -380,4 +444,25 @@ Customer* Application::getACustomer()
     } while (aCustomerPtr == nullptr); // until a customer is found
 
     return aCustomerPtr;
+}
+
+Product *Application::getAProduct()
+{
+    // to be repeated for every item
+    int pID; // holdin a product ID
+    do
+    {
+        // read in the ID of a product
+        pID = this->getUI().getProductIDInput();
+
+        // if the choice is to abort
+        if (pID == 0)
+        {
+            this->getUI().abortMessage();
+            return nullptr;
+        }
+    } while (!productHashTable.contains(pID)); // until a product is found
+
+    // assing the product address to a pointer
+    return &productHashTable.get(pID);
 }

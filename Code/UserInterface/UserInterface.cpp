@@ -71,6 +71,19 @@ void UserInterface::printTotalPay(double price) {
     std::cout << "\nTotal amount to pay: £" << price << std::endl;
 }
 
+void UserInterface::noProductsLoaned(std::string customer) {
+    std::cout << "The customer " << customer << " has no loaned products.\n";
+}
+
+std::string UserInterface::isReturningMore() {
+    std::cout << "Would you like to return more items? (Y/n)";
+    return getInput<std::string>(); 
+}
+
+void UserInterface::noMoreProducts(std::string customer) {
+    std::cout << "The customer " << customer << " has no more items loaned.\n";
+}
+
 std::string UserInterface::LoginSuccesfull()
 {
     std::string message = "\nLogin successful!\n";

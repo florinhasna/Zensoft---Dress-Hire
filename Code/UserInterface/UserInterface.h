@@ -24,6 +24,10 @@ public:
     void printProductConfirmation(std::string aProduct);
     void printTotalPay(double price);
 
+    void noProductsLoaned(std::string customer);
+    std::string isReturningMore();
+    void noMoreProducts(std::string customer);
+
     static std::string LoginSuccesfull();
     static std::string LoginUnsuccesfull();
     static std::string MaximumLoginAttemps();
