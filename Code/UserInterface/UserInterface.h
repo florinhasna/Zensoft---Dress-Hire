@@ -20,6 +20,10 @@ public:
     void productStatusInstruction();
     void addCustomerInstruction();
 
+    void printCustomerData(std::string data);
+    void printProductConfirmation(std::string aProduct);
+    void printTotalPay(double price);
+
     static std::string LoginSuccesfull();
     static std::string LoginUnsuccesfull();
     static std::string MaximumLoginAttemps();
@@ -37,7 +41,8 @@ public:
     static std::string getGenderInput();
     static std::string getAgeInput();
     static std::string getphoneNumberInput();
-    double getPriceInput();
+    static int getProductIDInput();
+    static int getNumberOfItems();
 
     // message when the user chooses to abort an action
     void abortMessage();
@@ -53,9 +58,9 @@ public:
     static void invalidID(const std::string& ID);
     static void invalidPin(const std::string& PIN);
     static void invalidgender(const std::string& gender);
-    static void invalidAge(const std::string& age);
-    static void invalidphoneNumber(const std::string& phoneNumber);
-    void invalidPrice(double price);
+    static void invalidAge();
+    static void invalidphoneNumber();
+    static void productUnavailable(std::string product);
 };
 
 #endif

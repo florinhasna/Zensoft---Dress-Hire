@@ -7,19 +7,22 @@ Application::Application(UserInterface ui, DataReader d)
 
     // Read and insert products
     auto products = d.readProducts();
-    for (const auto& product : products) {
+    for (const auto &product : products)
+    {
         productHashTable.put(product.getProductID(), product);
     }
 
     // Read and insert merchants
     auto merchants = d.readMerchants();
-    for (const auto& merchant : merchants) {
+    for (const auto &merchant : merchants)
+    {
         merchantHashTable.put(merchant.getStaffID(), merchant);
     }
 
     // Read and insert customers
     auto customers = d.readCustomers();
-    for (const auto& customer : customers) {
+    for (const auto &customer : customers)
+    {
         customerHashTable.put(customer.getID(), customer);
     }
 }
@@ -79,7 +82,7 @@ void Application::login()
         merchantID = UserInterface::getMerchantIDInput();
 
         pin = UserInterface::getPinInput();
-        
+
         for (const auto &merchant : merchants)
         {
             if (merchant.getStaffID() == merchantID && merchant.getPIN() == pin)
@@ -109,8 +112,8 @@ void Application::login()
 void Application::addMerchant()
 {
     std::string name, address, email, pin;
- std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-     name = UserInterface::getNameInput();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    name = UserInterface::getNameInput();
     while (!ValidateName(name))
     {
         UserInterface::invalidName(name);
@@ -124,7 +127,7 @@ void Application::addMerchant()
         std::getline(std::cin, address);
     }
 
-   email = UserInterface::getEmailInput();
+    email = UserInterface::getEmailInput();
     while (!ValidateEmail(email))
     {
         UserInterface::invalidEmail(email);
@@ -138,14 +141,14 @@ void Application::addMerchant()
         std::getline(std::cin, pin);
     }
 
-  std::vector<Merchant> merchants = this->data.readMerchants();
- std::string merchantID = generateMemberID(merchants, name);
-    //std::string staffID = generateMemberID(name);
-    
+    std::vector<Merchant> merchants = this->data.readMerchants();
+    std::string merchantID = generateMemberID(merchants, name);
+    // std::string staffID = generateMemberID(name);
+
     Merchant newMerchant(name, email, address, merchantID, pin);
     DataReader::AppendMerchantToCSV("Merchants.csv", newMerchant);
-    UserInterface::RegistrationSuccesfull(); 
-    std::cout <<  merchantID << std::endl;
+    UserInterface::RegistrationSuccesfull();
+    std::cout << merchantID << std::endl;
 }
 
 void Application::loopMainMenu()
@@ -184,7 +187,92 @@ void Application::loopMainMenu()
 
 void Application::issueProduct()
 {
+    // print instructions for the selected action
     this->getUI().issueProductInstruction();
+
+    // read from user an ID input for a customer
+    std::cin.ignore();
+    std::string crn = this->getUI().getIDInput();
+
+    // initialise a Customer pointer
+    Customer* aCustomerPtr = nullptr;
+    do
+    {
+        // check if the customer exists
+        if (customerHashTable.contains(crn))
+        {
+            aCustomerPtr = &customerHashTable.get(crn); // if it does, assign to pointer
+        }
+        else
+        {
+            // invalid message
+            this->getUI().invalidID(crn);
+
+            // choice is to abort the action
+            if (crn == "0")
+            {
+                this->getUI().abortMessage();
+                return;
+            } else { // try again
+                std::cin.ignore();
+                crn = this->getUI().getIDInput();
+            }
+        }
+    } while (aCustomerPtr == nullptr); // until a customer is found
+
+    // print the customer data
+    this->getUI().printCustomerData(aCustomerPtr->toString());
+
+    // initialise an integer variable to hold number of items customer is borrowing
+    int items;
+    do{
+        // read in the number of items
+        items = this->getUI().getNumberOfItems();
+        if(items == 0){ // choice to abort
+            this->getUI().abortMessage();
+            return;
+        }
+    } while(items < 0); // until the number is valid
+
+    std::vector<Product*> products;
+    for(int i = 0; i < items; i++) { // to be repeated for every item
+        int pID; // holdin a product ID
+        do {
+            // read in the ID of a product
+            pID = this->getUI().getProductIDInput();
+
+            // if the choice is to abort
+            if(pID == 0) {
+                this->getUI().abortMessage();
+                return;
+            }
+        } while(!productHashTable.contains(pID)); // until a product is found
+
+        // assing the product address to a pointer
+        Product* aProduct = &productHashTable.get(pID);
+
+        if(aProduct->getIsAvailable()) { // check availability
+            products.push_back(aProduct);
+        } else { // if unavailable, skip the product, move to next
+            this->getUI().productUnavailable(aProduct->getProductName() + " - " + aProduct->getCollection());
+        }
+    }
+
+    double price = 0;
+    // print confirmation
+    for(Product* p : products) {
+        // add the products loaned in the customer vector
+        aCustomerPtr->getProductsLoaned().push_back(p);
+        // update availability
+        p->setIsAvailable(false);
+
+        // set price
+        price += p->getDailyRentalPrice();
+
+        this->getUI().printProductConfirmation(p->getProductName() + " " + p->getProductSize() + " - " + p->getCollection());
+    }
+
+    this->getUI().printTotalPay(price);
 }
 
 void Application::returnProduct()
@@ -236,20 +324,20 @@ void Application::addCustomer()
     std::string age = UserInterface::getAgeInput();
     while (!Validateage(age))
     {
-        UserInterface::invalidAge(age);
+        UserInterface::invalidAge();
         std::getline(std::cin, age);
     }
 
     std::string phoneNumber = UserInterface::getphoneNumberInput();
     while (!ValidatephoneNumber(phoneNumber))
     {
-        UserInterface::invalidphoneNumber(phoneNumber);
+        UserInterface::invalidphoneNumber();
         std::getline(std::cin, phoneNumber);
     }
 
     std::vector<Customer> Customers = this->data.readCustomers();
     std::string CustomerID = generateMemberID(Customers, name);
-   Customer newCustomer(name, address, CustomerID, email, gender, age, phoneNumber);
+    Customer newCustomer(name, address, CustomerID, email, gender, age, phoneNumber);
     DataReader::AppendCustomerToCSV("Customers.csv", newCustomer);
     UserInterface::CustomerRegistrationSuccesfull();
     std::cout << CustomerID << std::endl;

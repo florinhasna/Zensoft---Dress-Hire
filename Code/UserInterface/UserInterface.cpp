@@ -58,6 +58,19 @@ void UserInterface::addCustomerInstruction()
     std::cout << "\t- name\n\t- gender\n\t- age \n\t- address\n\t- email\n\t- phone number\n";
 }
 
+void UserInterface::printCustomerData(std::string data) {
+    std::cout << "You selected:";
+    std::cout << data << std::endl;
+}
+
+void UserInterface::printProductConfirmation(std::string aProduct) {
+    std::cout << "Borrowed " << aProduct << std::endl;
+}
+
+void UserInterface::printTotalPay(double price) {
+    std::cout << "\nTotal amount to pay: £" << price << std::endl;
+}
+
 std::string UserInterface::LoginSuccesfull()
 {
     std::string message = "\nLogin successful!\n";
@@ -86,14 +99,12 @@ std::string UserInterface::RegistrationSuccesfull()
     return message;
 }
 
-
 std::string UserInterface::CustomerRegistrationSuccesfull()
 {
     std::string message = "Customer added successfully with ID: ";
     std::cout << message;
     return message;
 }
-
 
 // methods used to read inputs from user and returns
 // the relevant data
@@ -132,7 +143,7 @@ std::string UserInterface::getAddressInput()
 std::string UserInterface::getIDInput()
 {
     std::string ID;
-    std::cout << "\nEnter ID: ";
+    std::cout << "\nEnter CRN: ";
     std::getline(std::cin, ID);
     return ID;
 }
@@ -153,6 +164,16 @@ std::string UserInterface::getGenderInput()
     return gender;
 }
 
+int UserInterface::getProductIDInput() {
+    std::cout << "\nEnter product ID";
+    return getInput<int>();
+}
+
+int UserInterface::getNumberOfItems() {
+    std::cout << "\nEnter the number of items";
+    return getInput<int>();
+}
+
 
 void UserInterface::invalidgender(const std::string &gender)
 {
@@ -169,7 +190,7 @@ std::string UserInterface::getAgeInput()
     return age;
 }
 
-void UserInterface::invalidAge(const std::string &age)
+void UserInterface::invalidAge()
 {
     std::cout << "\nThe age should be a number\n";
     std::cout << "\nEnter Age : ";
@@ -183,17 +204,12 @@ std::string UserInterface::getphoneNumberInput()
     return phoneNumber;
 }
 
-void UserInterface::invalidphoneNumber(const std::string &phoneNumber)
+void UserInterface::invalidphoneNumber()
 {
     std::cout << "\nThe phone Number should be a number\n";
     std::cout << "\nEnter phone Number : ";
 }
 
-double UserInterface::getPriceInput()
-{
-    std::cout << "\nEnter price";
-    return getInput<double>();
-}
 
 // message when the user chooses to abort an action
 void UserInterface::abortMessage()
@@ -247,7 +263,6 @@ void UserInterface::invalidID(const std::string &id)
 {
     std::cout << "\nThe ID \"" << id << "\" is invalid.\n";
     std::cout << "Make sure you are entering a valid ID.\n";
-    std::cout << "\nEnter ID : ";
 }
 
 void UserInterface::invalidPin(const std::string &PIN)
@@ -256,7 +271,6 @@ void UserInterface::invalidPin(const std::string &PIN)
     std::cout << "\nEnter PIN : ";
 }
 
-void UserInterface::invalidPrice(double price)
-{
-    std::cout << "\nThe price \"£" << price << "\" is invalid.\n";
+void UserInterface::productUnavailable(std::string product){
+    std::cout << "The product " << product << " is unavailable.\n";
 }
