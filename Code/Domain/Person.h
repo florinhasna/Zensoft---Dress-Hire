@@ -11,8 +11,8 @@ private:
     std::string ID;
 
 public:
-    Person();  // Default constructor
-    Person(const std::string& name, const std::string& email, const std::string& address, const std::string& ID);  // Constructor with parameters
+    Person();  
+    Person(const std::string& name, const std::string& email, const std::string& address, const std::string& ID);  
     virtual ~Person() = default;
     std::string getName() const;
     void setName(const std::string& newName);

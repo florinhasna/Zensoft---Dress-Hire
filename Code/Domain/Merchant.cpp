@@ -1,7 +1,7 @@
 #include "Merchant.h"
 
 Merchant::Merchant(const std::string& name, const std::string& email, const std::string& address, const std::string& staffID, const std::string& PIN)
-    : Person(name, email, address, staffID), // Now its passing staffID as ID to Person
+    : Person(name, email, address, staffID), 
       PIN(PIN), 
       staffID(staffID) {}
 

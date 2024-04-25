@@ -5,18 +5,18 @@
 
 class Merchant : public Person {
 private:
-    std::string PIN;  // PIN is a string so it can handle alphanumeric PINs
-    std::string staffID;  // Unique staff ID for the merchant which differs to the Customers ID
+    std::string PIN;  
+    std::string staffID;  
 
 public:
-    // Constructor updated with PIN as std::string
+ 
     Merchant(const std::string& name, const std::string& email, const std::string& address, const std::string& staffID, const std::string& PIN);
 
     std::string getPIN() const;
     void setPIN(const std::string& newPIN);
 
-    std::string getStaffID() const;  // Getter for staffID
-    void setStaffID(const std::string& newStaffID);  // Setter for staffID
+    std::string getStaffID() const;  
+    void setStaffID(const std::string& newStaffID);  
 
     void issueProduct(Customer& customer, Product& product);
     void returnProduct(Customer& customer, Product& product);

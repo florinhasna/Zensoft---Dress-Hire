@@ -15,8 +15,6 @@ private:
     std::vector<Product*> productsLoaned;
 
 public:
-    // Customer(const std::string& name, const std::string& email, const std::string& address, const std::string& ID);
-    // ~Customer();
   Customer(const std::string& name, const std::string& address, const std::string& ID, const std::string& email,
              const std::string& gender, const std::string& age, const std::string& phoneNumber);
     ~Customer();

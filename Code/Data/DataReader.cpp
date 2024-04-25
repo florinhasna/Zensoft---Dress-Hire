@@ -14,7 +14,7 @@ std::vector<Product> DataReader::readProducts() {
 
     std::vector<Product> products;
     std::string line;
-    std::getline(file, line); // Skip the header line
+    std::getline(file, line); 
 
     while (std::getline(file, line)) {
         std::istringstream s(line);
@@ -38,7 +38,6 @@ std::vector<Product> DataReader::readProducts() {
         std::getline(s, line, ',');
         fullPrice = std::stod(line);
 
-        // Use the constructor to create a Product instance
         Product product(productID, gender, collection, productType, productName, size, colour, dailyRentalPrice, fullPrice);
         products.push_back(product);
     }
@@ -78,7 +77,6 @@ std::vector<Merchant> DataReader::readMerchants() {
 }
 
 void DataReader::AppendMerchantToCSV(const std::string& filename, const Merchant& merchant) {
-    // Open the file in append mode.
     std::ofstream file;
     file.open(filename, std::ios_base::app);
 
@@ -87,7 +85,6 @@ void DataReader::AppendMerchantToCSV(const std::string& filename, const Merchant
     }
 
     if (file.is_open()) {
-        // Write the merchant's details to the file in CSV format.
         file << merchant.getStaffID() << ","
              << merchant.getName() << ","
              << merchant.getAddress() << ","
@@ -99,34 +96,6 @@ void DataReader::AppendMerchantToCSV(const std::string& filename, const Merchant
 }
 
 
-//    std::vector<Customer> DataReader::readCustomers() {
-//     std::ifstream file(filePathCustomers);
-//     if (!file.is_open()) {
-//         std::cerr << "Error opening file: " << filePathCustomers << std::endl;
-//         return {};
-//     }
-
-//     std::vector<Customer> customers;
-//     std::string line;
-//     std::getline(file, line); 
-
-//     while (std::getline(file, line)) {
-//         std::istringstream s(line);
-//         std::string ID, name, email, address;
-
-//         std::getline(s, ID, ',');  
-//         std::getline(s, name, ',');
-//         std::getline(s, email, ',');
-//         std::getline(s, address, ',');
-
-//         // Create a Customer object with parsed data
-//         customers.push_back(Customer(name, email, address, ID));
-//     }
-
-//     file.close();
-//     return customers;
-// }
-
 std::vector<Customer> DataReader::readCustomers() {
     std::vector<Customer> customers;
     std::string line;
@@ -136,9 +105,8 @@ std::vector<Customer> DataReader::readCustomers() {
         std::istringstream iss(line);
         std::string name, address, ID, email, gender, age, phoneNumber;
 
-        // Assume the order in the file is: name, address, ID, email, gender, age, phoneNumber
         if (!(iss >> name >> address >> ID >> email >> gender >> age >> phoneNumber)) { 
-            break; // Error in parsing
+            break;
         }
 
         customers.push_back(Customer(name, address, ID, email, gender, age, phoneNumber));
@@ -149,7 +117,6 @@ std::vector<Customer> DataReader::readCustomers() {
 
 
 void DataReader::AppendCustomerToCSV(const std::string& filename, const Customer& customer) {
-    // Open the file in append mode.
     std::ofstream file;
     file.open(filename, std::ios_base::app);
 
@@ -157,7 +124,6 @@ void DataReader::AppendCustomerToCSV(const std::string& filename, const Customer
         throw std::runtime_error("Could not open file for writing.");
     }
 
-    // Write the customer's details to the file in CSV format.
     file << customer.getID() << ","        
          << customer.getName() << ","
          << customer.getAddress() << ","
@@ -166,6 +132,5 @@ void DataReader::AppendCustomerToCSV(const std::string& filename, const Customer
          << customer.getAge() << ","
          << customer.getPhoneNumber() << "\n";
     
-    // Close the file
     file.close();
 }

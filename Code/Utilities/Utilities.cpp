@@ -97,19 +97,6 @@ inline bool Validateage(const std::string &age){
     return std::regex_match(age, age_pattern);
 }
 
-
-// inline std::string generateMemberID(const std::string &name){
-//     if (name.empty())
-//         return "";
-//     std::random_device rd;
-//     std::mt19937 rng(rd());
-//     std::uniform_int_distribution<int> uni(1000, 9999);
-//     char firstLetter = std::toupper(name[0]);
-//     int randomNumbers = uni(rng);
-
-//     return firstLetter + std::to_string(randomNumbers);
-// }
-
 template <typename T>
 inline std::string generateMemberID(const std::vector<T>& existingItems, const std::string &name) {
     if (name.empty())
