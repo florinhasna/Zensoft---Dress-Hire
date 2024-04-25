@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include "../Utilities/Utilities.cpp"
-
+#include "../Utilities/Hash.h"
 #include <vector>
 #include <string>
 
@@ -83,3 +83,59 @@ TEST_CASE("Validation Functions", "[Validation]") {
     }
 }
 
+
+
+// Define a test case for the LinearProbingHash class functionality
+TEST_CASE("LinearProbingHash functionality tests", "[hash]") {
+    // Create an instance of the hash table with string keys and integer values
+    LinearProbingHash<std::string, int> hash;
+
+    // Test inserting and retrieving values from the hash table
+    SECTION("Insert and retrieve values") {
+        // Insert some key-value pairs
+        hash.put("one", 1);
+        hash.put("two", 2);
+        hash.put("three", 3);
+
+        // Check that values can be retrieved correctly
+        REQUIRE(hash.get("one") == 1);  // Expect value associated with "one" to be 1
+        REQUIRE(hash.get("two") == 2);  // Expect value associated with "two" to be 2
+        REQUIRE(hash.get("three") == 3);  // Expect value associated with "three" to be 3
+    }
+
+    // Test updating the value associated with an existing key in the hash table
+    SECTION("Update existing key") {
+        // Insert a key-value pair and then update the value
+        hash.put("one", 1);
+        hash.put("one", 100);  // Update the value associated with key "one"
+
+        // Verify that the value has been updated correctly
+        REQUIRE(hash.get("one") == 100);  // Expect the updated value to be 100
+    }
+
+    // Test the behavior when trying to retrieve a value using a non-existing key
+    SECTION("Handle non-existing key") {
+        // Insert a single key-value pair
+        hash.put("one", 1);
+
+        // Attempt to get a value using a non-existing key should throw a runtime error
+        REQUIRE_THROWS_AS(hash.get("two"), std::runtime_error);  // "two" has not been inserted
+    }
+
+    // Test resizing of the hash table when load factor exceeds threshold
+    SECTION("Resize hash table") {
+        // Insert enough items to trigger a resize of the hash table
+        int n_items = 50;  // Assuming a resize threshold at load factor > 0.5, this should trigger a resize
+        for (int i = 0; i < n_items; ++i) {
+            hash.put("key" + std::to_string(i), i);  // Insert sequential keys with their index as the value
+        }
+
+        // Check if the number of keys is correct after resizing
+        REQUIRE(hash.keys().size() == n_items);  // Ensure all items are still accessible and correctly counted
+
+        // Verify that all values remain correct after the hash table has been resized
+        for (int i = 0; i < n_items; ++i) {
+            REQUIRE(hash.get("key" + std::to_string(i)) == i);  // Each key should retrieve its corresponding value
+        }
+    }
+}
