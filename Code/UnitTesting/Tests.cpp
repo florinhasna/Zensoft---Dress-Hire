@@ -2,6 +2,12 @@
 #include "catch.hpp"
 #include "../Utilities/Utilities.cpp"
 #include "../Utilities/Hash.h"
+#include "../Domain/Merchant.h"
+#include "../Domain/Product.h"
+#include "../Domain/Customer.h"
+
+#include "../DataReader.h" // Update the path as necessary
+#include <fstream>
 #include <vector>
 #include <string>
 
@@ -83,8 +89,6 @@ TEST_CASE("Validation Functions", "[Validation]") {
     }
 }
 
-
-
 // Define a test case for the LinearProbingHash class functionality
 TEST_CASE("LinearProbingHash functionality tests", "[hash]") {
     // Create an instance of the hash table with string keys and integer values
@@ -138,4 +142,70 @@ TEST_CASE("LinearProbingHash functionality tests", "[hash]") {
             REQUIRE(hash.get("key" + std::to_string(i)) == i);  // Each key should retrieve its corresponding value
         }
     }
+}
+
+// Test cases for the Product class
+TEST_CASE("Product class tests", "[Product]") {
+    SECTION("Check if product ID is set and retrieved correctly") {
+        Product product(1, "Male", "Spring Collection", "Shirt", "Slim Fit Shirt", "Large", "Blue", 25.99, 49.99);
+        REQUIRE(product.getProductID() == 1);
+    }
+
+}
+
+// Test cases for the Merchant class
+TEST_CASE("Merchant class tests", "[Merchant]") {
+    SECTION("Check if PIN is set and retrieved correctly") {
+        Merchant merchant("John Doe", "john@example.com", "123 Main St", "M123", "1234");
+        REQUIRE(merchant.getPIN() == "1234");
+    }
+}
+
+// Helper function to check if a file exists
+bool fileExists(const std::string& filename) {
+    std::ifstream file(filename);
+    return file.good();
+}
+
+// Test case for appending new merchant and customer data to existing CSV files
+TEST_CASE("Append Merchant Data to Existing CSV File", "[DataReader]") {
+    // Define filenames for existing CSV files
+    std::string productsFile = "TEST"; 
+    std::string merchantsFile = "../Merchants.csv";
+    std::string customersFile = "TEST";
+
+    // Create DataReader object - needs 3 args
+    DataReader dataReader(productsFile, merchantsFile, customersFile);
+
+    // Define data for new merchant and customer
+    std::string newMerchantName = "New Merchant";
+    std::string newMerchantEmail = "new_merchant@example.com";
+    std::string newMerchantAddress = "123 New Street";
+    std::string newMerchantStaffID = "M12345";
+    std::string newMerchantPIN = "1234";
+
+
+
+    // Append new merchant and customer data to existing CSV files
+dataReader.AppendMerchantToCSV(merchantsFile, Merchant(newMerchantName, newMerchantEmail, newMerchantAddress, newMerchantStaffID, newMerchantPIN));
+
+// Verify that the data was successfully appended
+REQUIRE(fileExists(merchantsFile)); // Check if merchants file still exists
+
+// Read back the updated data
+std::vector<Merchant> updatedMerchants = dataReader.readMerchants();
+// Check if the new merchant data was added
+bool newMerchantFound = false;
+for (const auto& merchant : updatedMerchants) { 
+    if (merchant.getName() == newMerchantName &&
+        merchant.getEmail() == newMerchantEmail &&
+        merchant.getAddress() == newMerchantAddress &&
+        merchant.getStaffID() == newMerchantStaffID &&
+        merchant.getPIN() == newMerchantPIN) {
+        newMerchantFound = true;
+        break;
+    }
+}
+REQUIRE(newMerchantFound);
+
 }
