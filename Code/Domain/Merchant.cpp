@@ -35,6 +35,7 @@ void Merchant::returnProduct(Customer* customer, Product* product) {
     customer->returnProduct(product);
     product->setIsAvailable(true);
     product->setBorrowedBy("");
+    product->setDateOfBorrowal("");
 }
 
 void Merchant::calculateFine(Product* product) {
