@@ -15,8 +15,7 @@ private:
     double dailyRentalPrice;
     double fullPrice;
     bool isAvailable;
-    Date dateOfBorrowal;
-    Date dueDate;
+    Date borrowedAndDue;
     std::string borrowedBy;
 
 public:
@@ -36,8 +35,7 @@ public:
     double getDailyRentalPrice() const;
     double getFullPrice() const;
     bool getIsAvailable() const;
-    Date getDateOfBorrowal() const;
-    Date getDueDate() const;
+    Date getBorrowedAndDue() const;
     std::string getBorrowedBy() const;
 
     // Setters
@@ -51,8 +49,7 @@ public:
     void setDailyRentalPrice(double newDailyRentalPrice);
     void setFullPrice(double newFullPrice);
     void setIsAvailable(bool newIsAvailable);
-    void setDateOfBorrowal(const Date& newDateOfBorrowal);
-    void setDueDate(const Date& newDueDate);
+    void setBorrowedAndDue(const Date& newDateOfBorrowal);
     void setBorrowedBy(const std::string& ID);
 
     // methods

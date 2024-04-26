@@ -16,7 +16,7 @@ DataReader.o : Data/DataReader.cpp Data/DataReader.h
 UserInterface.o : UserInterface/UserInterface.cpp UserInterface/UserInterface.h
 	$(CXX) $(CXXFLAGS) -c $<
 
-Application.o : Application/Application.cpp Application/Application.h
+Application.o : Application/Application.cpp Application/Application.h Utilities/Utilities.h Utilities/Utilities.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
 Person.o : Domain/Person.cpp Domain/Person.h

@@ -8,8 +8,7 @@ Product::Product(int productID, const std::string& gender, const std::string& co
     : productID(productID), gender(gender), collection(collection),
       productType(productType), productName(productName), size(size),
       colour(colour), dailyRentalPrice(dailyRentalPrice), fullPrice(fullPrice),
-      isAvailable(true), dateOfBorrowal(), 
-      dueDate() {}
+      isAvailable(true), borrowedAndDue() {}
 
 //getters
 int Product::getProductID() const {
@@ -52,12 +51,8 @@ bool Product::getIsAvailable() const {
     return isAvailable;
 }
 
-Date Product::getDateOfBorrowal() const {
-    return dateOfBorrowal;
-}
-
-Date Product::getDueDate() const {
-    return dueDate;
+Date Product::getBorrowedAndDue() const {
+    return borrowedAndDue;
 }
 
 std::string Product::getBorrowedBy() const {
@@ -105,12 +100,8 @@ void Product::setIsAvailable(bool newIsAvailable) {
     isAvailable = newIsAvailable;
 }
 
-void Product::setDateOfBorrowal(const Date& newDateOfBorrowal) {
-    dateOfBorrowal = newDateOfBorrowal;
-}
-
-void Product::setDueDate(const Date& newDueDate) {
-    dueDate = newDueDate;
+void Product::setBorrowedAndDue(const Date& newDateOfBorrowal) {
+    borrowedAndDue = newDateOfBorrowal;
 }
 
 void Product::setBorrowedBy(const std::string& ID) {

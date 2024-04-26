@@ -3,7 +3,6 @@
 
 #include "hash.h"
 #include <iostream>
-#include <string>
 #include <vector>
 #include <regex>
 #include <algorithm>
@@ -11,16 +10,8 @@
 #include <string>
 #include <iomanip>
 #include <random>
-
-
-template <typename T>
-T getInput()
-{
-    T input;
-    std::cout << " > ";
-    std::cin >> input;
-    return input;
-}
+#include <ctime>
+#include <sstream>
 
 class Date{
 
@@ -29,29 +20,15 @@ private:
     std::string dueDate;
     std::string addDays(const std::string &borrowDate, int rentalDays) const;
 
-
 public:
-    Date(const std::string& date);
     Date();
+    Date(const std::string& date);
 
     std::string getDateOfBorrowal() const;
     std::string getDueDate() const;
 
     void setDateOfBorrowal(const std::string& aDate);
-    void setDueDate(const int rentalDays); 
-
-    
+    void setDueDate(const int rentalDays);   
 };
-
-
-inline bool ValidateName(const std::string& name);
-inline bool ValidatePostcode(const std::string& address);
-inline bool ValidateEmail(const std::string& email);
-inline bool ValidatePIN(const std::string& pin); 
-inline bool ValidateGender(const std::string& gender); 
-inline bool Validateage(const std::string& age); 
-inline bool ValidatephoneNumber(const std::string& phoneNumber); 
-template <typename T>
-std::string generateMemberID(const std::vector<T>& existingItems, const std::string &name);
 
 #endif

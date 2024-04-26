@@ -21,6 +21,7 @@ public:
     void addCustomerInstruction();
 
     void printCustomerData(std::string data);
+    int getNumberOfDays();
     void printProductConfirmation(std::string aProduct);
     void printTotalPay(double price);
 

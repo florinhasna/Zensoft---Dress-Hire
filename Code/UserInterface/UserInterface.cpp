@@ -3,6 +3,15 @@
 UserInterface::UserInterface() {} // constructor
 UserInterface::~UserInterface() {}
 
+template <typename T>
+T getInput()
+{
+    T input;
+    std::cout << " > ";
+    std::cin >> input;
+    return input;
+}
+
 void UserInterface::loadLogin()
 {
     std::cout << "\nPlease choose an option from the following list:\n";
@@ -61,6 +70,11 @@ void UserInterface::addCustomerInstruction()
 void UserInterface::printCustomerData(std::string data) {
     std::cout << "You selected:";
     std::cout << data << std::endl;
+}
+
+int UserInterface::getNumberOfDays() {
+    std::cout << "Enter the number of days to borrow the products for";
+    return getInput<int>();
 }
 
 void UserInterface::printProductConfirmation(std::string aProduct) {
