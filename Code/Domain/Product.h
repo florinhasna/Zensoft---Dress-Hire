@@ -17,6 +17,8 @@ private:
     bool isAvailable;
     Date borrowedAndDue;
     std::string borrowedBy;
+    std::string getDateOfBorrowal() const;
+    std::string getDueDate() const;
 
 public:
     Product(int productID, const std::string& gender, const std::string& collection,
@@ -51,6 +53,8 @@ public:
     void setIsAvailable(bool newIsAvailable);
     void setBorrowedAndDue(const Date& newDateOfBorrowal);
     void setBorrowedBy(const std::string& ID);
+    void setDateOfBorrowal(const std::string& date);
+    void setDueDate(int rentalDays);
 
     // methods
     double calculateTotalForBorrowal() const;
