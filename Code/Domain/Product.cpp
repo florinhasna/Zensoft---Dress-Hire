@@ -129,7 +129,7 @@ std::string Product::getDueDate() const {
 
 void Product::setDateOfBorrowal(const std::string& date) {
     borrowedAndDue.setDateOfBorrowal(date);
-    setIsAvailable(false);  // Assuming the product becomes unavailable upon setting a borrow date
+    setIsAvailable(false);  
 }
 
 void Product::setDueDate(int rentalDays) {
