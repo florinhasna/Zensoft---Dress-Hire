@@ -111,12 +111,13 @@ void Product::setBorrowedBy(const std::string& ID) {
 
 //methods
 double Product::calculateTotalForBorrowal() const {
-    // int daysBorrowed = Utilities::daysBetween(dateOfBorrowal, Utilites::getCurrentDate());
-    // return daysBorrowed * dailyRentalPrice;
+    int daysBorrowed = Date::daysBetween(borrowedAndDue.getDateOfBorrowal(), Date::getCurrentDate());
+    return daysBorrowed * dailyRentalPrice;
 }
 
+
 bool Product::isLate() const {
-    // return Utilities::isAfter(Utilities::getCurrentDate(), dueDate);
+    return Date::isAfter(Date::getCurrentDate(), borrowedAndDue.getDueDate());
 }
 
 std::string Product::getDateOfBorrowal() const {
