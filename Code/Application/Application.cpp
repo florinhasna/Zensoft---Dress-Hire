@@ -253,9 +253,9 @@ void Application::issueProduct()
     double price = 0;
     for (Product *p : products)
     {
-        loggedIn->issueProduct(aCustomerPtr, p); // Assumes this function changes availability but does not set dates.
+        loggedIn->issueProduct(aCustomerPtr, p); 
         p->setDateOfBorrowal(Date::getCurrentDate());
-        p->setDueDate(daysOfBorrowal);          // Needs to be added
+        p->setDueDate(daysOfBorrowal);        
         price += p->getDailyRentalPrice();
 
         this->getUI().printProductConfirmation(p->getProductName() + " " + p->getProductSize() + " - " + p->getCollection());
