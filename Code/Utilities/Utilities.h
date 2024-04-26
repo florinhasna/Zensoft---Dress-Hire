@@ -1,6 +1,7 @@
 #ifndef _UTILITIES_H_
 #define _UTILITIES_H_
-
+#include <ctime>
+#include <sstream>
 #include "hash.h"
 #include "Help.h"
 
@@ -17,6 +18,13 @@ public:
 
     std::string getDateOfBorrowal() const;
     std::string getDueDate() const;
+    static std::string getCurrentDate() {
+        std::time_t t = std::time(0);
+        std::tm* now = std::localtime(&t);
+        std::ostringstream oss;
+        oss << now->tm_mday << '-' << (now->tm_mon + 1) << '-' << (now->tm_year + 1900);
+        return oss.str();
+    }
 
     void setDateOfBorrowal(const std::string& aDate);
     void setDueDate(const int rentalDays);   
