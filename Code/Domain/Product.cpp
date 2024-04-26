@@ -110,8 +110,7 @@ void Product::setBorrowedBy(const std::string& ID) {
 
 
 //methods
-double Product::calculateTotalForBorrowal() const {
-    int daysBorrowed = Date::daysBetween(borrowedAndDue.getDateOfBorrowal(), Date::getCurrentDate());
+double Product::calculateTotalForBorrowal(int daysBorrowed) const {
     return daysBorrowed * dailyRentalPrice;
 }
 
@@ -130,7 +129,6 @@ std::string Product::getDueDate() const {
 
 void Product::setDateOfBorrowal(const std::string& date) {
     borrowedAndDue.setDateOfBorrowal(date);
-    setIsAvailable(false);  
 }
 
 void Product::setDueDate(int rentalDays) {
@@ -139,16 +137,23 @@ void Product::setDueDate(int rentalDays) {
 
 std::string Product::toString() const {
     std::ostringstream stream;
-    stream << "Product ID: " << getProductID() << "\n"
-           << "Gender: " << getGender() << "\n"
-           << "Collection: " << getCollection() << "\n"
-           << "Product Type: " << getProductType() << "\n"
-           << "Name: " << getProductName() << "\n"
-           << "Size: " << getProductSize() << "\n"
-           << "Colour: " << getProductColour() << "\n"
+    stream << "        Product ID: " << getProductID() << "\n"
+           << "            Gender: " << getGender() << "\n"
+           << "        Collection: " << getCollection() << "\n"
+           << "      Product Type: " << getProductType() << "\n"
+           << "              Name: " << getProductName() << "\n"
+           << "              Size: " << getProductSize() << "\n"
+           << "            Colour: " << getProductColour() << "\n"
            << "Daily Rental Price: " << getDailyRentalPrice() << "\n"
-           << "Full Price: " << getFullPrice() << "\n"
-           << "Date of Borrowal: " << getDateOfBorrowal() << "\n"
-           << "Due Date: " << getDueDate();
+           << "        Full Price: " << getFullPrice() << "\n"
+           << "  Date of Borrowal: " << getDateOfBorrowal() << "\n"
+           << "          Due Date: ";
+
+    if(getDateOfBorrowal() == "") {
+        stream << "\n";
+    } else {
+        stream << getDueDate() << "\n";
+    }
+
     return stream.str();
 }
