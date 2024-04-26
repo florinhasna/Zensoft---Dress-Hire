@@ -2,6 +2,8 @@
 #define _UTILITIES_H_
 #include <ctime>
 #include <sstream>
+#include <chrono>
+#include <iomanip>
 #include "hash.h"
 #include "Help.h"
 
@@ -22,7 +24,9 @@ public:
         std::time_t t = std::time(0);
         std::tm* now = std::localtime(&t);
         std::ostringstream oss;
-        oss << now->tm_mday << '-' << (now->tm_mon + 1) << '-' << (now->tm_year + 1900);
+        oss << std::setfill('0') << std::setw(2) << now->tm_mday << '-'
+            << std::setw(2) << (now->tm_mon + 1) << '-'
+            << (now->tm_year + 1900);
         return oss.str();
     }
 
