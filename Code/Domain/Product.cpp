@@ -108,6 +108,7 @@ void Product::setBorrowedBy(const std::string& ID) {
     borrowedBy = ID;
 }
 
+
 //methods
 double Product::calculateTotalForBorrowal() const {
     // int daysBorrowed = Utilities::daysBetween(dateOfBorrowal, Utilites::getCurrentDate());
@@ -118,9 +119,25 @@ bool Product::isLate() const {
     // return Utilities::isAfter(Utilities::getCurrentDate(), dueDate);
 }
 
+std::string Product::getDateOfBorrowal() const {
+    return borrowedAndDue.getDateOfBorrowal();
+}
+
+std::string Product::getDueDate() const {
+    return borrowedAndDue.getDueDate();
+}
+
+void Product::setDateOfBorrowal(const std::string& date) {
+    borrowedAndDue.setDateOfBorrowal(date);
+    setIsAvailable(false);  // Assuming the product becomes unavailable upon setting a borrow date
+}
+
+void Product::setDueDate(int rentalDays) {
+    borrowedAndDue.setDueDate(rentalDays);
+}
+
 std::string Product::toString() const {
     std::ostringstream stream;
-
     stream << "Product ID: " << getProductID() << "\n"
            << "Gender: " << getGender() << "\n"
            << "Collection: " << getCollection() << "\n"
@@ -129,8 +146,8 @@ std::string Product::toString() const {
            << "Size: " << getProductSize() << "\n"
            << "Colour: " << getProductColour() << "\n"
            << "Daily Rental Price: " << getDailyRentalPrice() << "\n"
-           << "Full Price: " << getFullPrice() << "\n";
-        //    << "Date of Borrowal: " << Utilities::toString(getDateOfBorrowal()) << "\n"
-        //    << "Due Date: " << Utilities::toString(getDueDate());
+           << "Full Price: " << getFullPrice() << "\n"
+           << "Date of Borrowal: " << getDateOfBorrowal() << "\n"
+           << "Due Date: " << getDueDate();
     return stream.str();
 }
