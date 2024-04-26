@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "../Utilities/Utilities.h"
 
 Application::Application(UserInterface ui, DataReader d)
 {
@@ -238,26 +239,23 @@ void Application::issueProduct()
     std::vector<Product *> products;
     for (int i = 0; i < items; i++)
     {
-        // assing the product address to a pointer
         Product *aProduct = this->getAProduct();
-
         if (aProduct->getIsAvailable())
-        { // check availability
+        {
             products.push_back(aProduct);
         }
         else
-        { // if unavailable, skip the product, move to next
+        {
             this->getUI().productUnavailable(aProduct->getProductName() + " - " + aProduct->getCollection());
         }
     }
 
     double price = 0;
-    // print confirmation
     for (Product *p : products)
     {
-        loggedIn->issueProduct(aCustomerPtr, p);
-
-        // set price
+        loggedIn->issueProduct(aCustomerPtr, p); // Assumes this function changes availability but does not set dates.
+        p->setDateOfBorrowal(Date::getCurrentDate());
+        p->setDueDate(daysOfBorrowal);          // Needs to be added
         price += p->getDailyRentalPrice();
 
         this->getUI().printProductConfirmation(p->getProductName() + " " + p->getProductSize() + " - " + p->getCollection());
@@ -267,8 +265,9 @@ void Application::issueProduct()
     {
         this->getUI().printTotalPay(price);
     }
-}
 
+
+}
 void Application::returnProduct()
 {
     this->getUI().returnProductInstruction();
