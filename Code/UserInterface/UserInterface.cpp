@@ -3,15 +3,6 @@
 UserInterface::UserInterface() {} // constructor
 UserInterface::~UserInterface() {}
 
-template <typename T>
-T getInput()
-{
-    T input;
-    std::cout << " > ";
-    std::cin >> input;
-    return input;
-}
-
 void UserInterface::loadLogin()
 {
     std::cout << "\nPlease choose an option from the following list:\n";

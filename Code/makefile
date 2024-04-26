@@ -2,9 +2,12 @@ CXX = g++
 CXXFLAGS = -g -Wall -Wextra -Wpedantic
 
 .PHONY : all
-all : program
+all : program tests
 
 program : Runner.cpp Utilities.o DataReader.o UserInterface.o Application.o Person.o Merchant.o Customer.o Product.o
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+tests : UnitTesting/Tests.cpp Utilities.o DataReader.o UserInterface.o Application.o Person.o Merchant.o Customer.o Product.o
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 Utilities.o : Utilities/Utilities.cpp Utilities/Utilities.h
@@ -36,3 +39,4 @@ clean :
 	rm *.o
 	rm *~
 	rm program
+	rm tests

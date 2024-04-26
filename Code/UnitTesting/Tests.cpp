@@ -1,6 +1,5 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "../Utilities/Utilities.cpp"
 #include "../Utilities/Hash.h"
 #include "../Domain/Merchant.h"
 #include "../Domain/Product.h"

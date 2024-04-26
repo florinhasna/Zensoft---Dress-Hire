@@ -2,16 +2,7 @@
 #define _UTILITIES_H_
 
 #include "hash.h"
-#include <iostream>
-#include <vector>
-#include <regex>
-#include <algorithm>
-#include <ctime>
-#include <string>
-#include <iomanip>
-#include <random>
-#include <ctime>
-#include <sstream>
+#include "Help.h"
 
 class Date{
 
