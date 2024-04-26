@@ -4,7 +4,8 @@
 #include "../Domain/Merchant.h"
 #include "../Domain/Product.h"
 #include "../Domain/Customer.h"
-#include "../Data/DataReader.h" // Update the path as necessary
+#include "../Data/DataReader.h"
+#include "../Utilities/Utilities.h" 
 
 #include <fstream>
 #include <vector>
@@ -238,4 +239,40 @@ TEST_CASE("Append Merchant and Customer Data to Existing CSV Files", "[DataReade
     REQUIRE(newCustomerFound); // Ensure new customer was added successfully
 }
 
+// Test suite for Date class
+TEST_CASE("Date Class Tests", "[Date]") {
+    // Test constructor and date retrieval
+    SECTION("Constructor and Date Retrieval") {
+        Date dateObj("01-01-2020");
+        REQUIRE(dateObj.getDateOfBorrowal() == "01-01-2020");
+    }
 
+    // Test due date setting and retrieval
+    SECTION("Set and Retrieve Due Date") {
+        Date dateObj("01-01-2020");
+        dateObj.setDueDate(30); // Set due date 30 days later
+        REQUIRE(dateObj.getDueDate() == "31-01-2020");
+    }
+
+    // Test handling of invalid date formats
+    SECTION("Handle Invalid Date Format") {
+        Date dateObj("invalid-date");
+        REQUIRE_THROWS_AS(dateObj.setDueDate(30), std::runtime_error);
+    }
+
+    // Test behavior with empty date string
+    SECTION("Empty Date String") {
+        Date dateObj;
+        REQUIRE(dateObj.getDateOfBorrowal().empty());
+        REQUIRE(dateObj.getDueDate().empty());
+        REQUIRE_NOTHROW(dateObj.setDueDate(30)); // Should not throw, dueDate should remain empty
+        REQUIRE(dateObj.getDueDate().empty());
+    }
+
+    // Test setting new borrowal date
+    SECTION("Set New Borrowal Date") {
+        Date dateObj;
+        dateObj.setDateOfBorrowal("15-02-2020");
+        REQUIRE(dateObj.getDateOfBorrowal() == "15-02-2020");
+    }
+}
