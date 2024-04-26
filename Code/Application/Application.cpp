@@ -225,12 +225,16 @@ void Application::issueProduct()
     } while (items < 0); // until the number is valid
 
     int daysOfBorrowal;
-    do{
+    do
+    {
         daysOfBorrowal = this->getUI().getNumberOfDays();
 
-        if(daysOfBorrowal <= 0) {
+        if (daysOfBorrowal <= 0)
+        {
             this->getUI().errorMessage();
-        } else if(daysOfBorrowal == 0){
+        }
+        else if (daysOfBorrowal == 0)
+        {
             this->getUI().abortMessage();
             return;
         }
@@ -253,10 +257,10 @@ void Application::issueProduct()
     double price = 0;
     for (Product *p : products)
     {
-        loggedIn->issueProduct(aCustomerPtr, p); 
+        loggedIn->issueProduct(aCustomerPtr, p);
         p->setDateOfBorrowal(Date::getCurrentDate());
-        p->setDueDate(daysOfBorrowal);        
-        price += p->getDailyRentalPrice();
+        p->setDueDate(daysOfBorrowal);
+        price += p->calculateTotalForBorrowal(daysOfBorrowal);
 
         this->getUI().printProductConfirmation(p->getProductName() + " " + p->getProductSize() + " - " + p->getCollection());
     }
@@ -265,9 +269,8 @@ void Application::issueProduct()
     {
         this->getUI().printTotalPay(price);
     }
-
-
 }
+
 void Application::returnProduct()
 {
     this->getUI().returnProductInstruction();
@@ -291,16 +294,14 @@ void Application::returnProduct()
         }
 
         // print the products
-        for (Product *p : aCustomer->getProductsLoaned())
-        {
-            std::cout << p->toString() << std::endl;
-        }
+        displayBorrowedItems(aCustomer->getProductsLoaned());
 
         // get the product input
         Product *aProduct = this->getAProduct();
 
         // aborting
-        if(aProduct == nullptr) {
+        if (aProduct == nullptr)
+        {
             return;
         }
 
@@ -340,11 +341,7 @@ void Application::seeBorrows()
 
     auto borrows = aCustomer->getProductsLoaned();
 
-    std::cout << "\nBorrows:\n";
-    for (auto borrow : borrows)
-    {
-        std::cout << borrow->toString();
-    }
+    displayBorrowedItems(borrows);
 }
 
 void Application::seeProductStatus()
@@ -358,13 +355,19 @@ void Application::seeProductStatus()
         return;
     }
 
-    if (aProduct->getIsAvailable()) {
+    std::cout << std::endl;
+    if (aProduct->getIsAvailable())
+    {
         std::cout << "The product is currently available\n";
-    } else {
+    }
+    else
+    {
         std::cout << "Borrowed by: " << aProduct->getBorrowedBy() << std::endl;
     }
-    
+
+    std::cout << std::endl;
     std::cout << aProduct->toString();
+    std::cout << std::endl;
 }
 
 void Application::addCustomer()
@@ -476,4 +479,26 @@ Product *Application::getAProduct()
 
     // assing the product address to a pointer
     return &productHashTable.get(pID);
+}
+
+void Application::displayBorrowedItems(std::vector<Product*> borrows) {
+    if (borrows.size() != 0)
+    {
+        std::cout << "\n\tBorrows:\n\n";
+        for (auto borrow : borrows)
+        {
+            std::cout << borrow->getProductName() << " - ";
+            std::cout << borrow->getCollection() << std::endl;
+            std::cout << "    ID: " << borrow->getProductID() << std::endl;
+            std::cout << "Colour: " << borrow->getProductColour() << std::endl;
+            std::cout << "  Size: " << borrow->getProductSize() << std::endl;
+            std::cout << "  Type: " << borrow->getProductType() << std::endl;
+            std::cout << " Until: " << borrow->getDueDate() << std::endl;
+            std::cout << std::endl;
+        }        
+    }
+    else
+    {
+        std::cout << "\n\tThe customer has nothing borrowed.\n\n";
+    }
 }
