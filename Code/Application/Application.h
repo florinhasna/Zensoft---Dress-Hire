@@ -25,6 +25,7 @@ private:
     void addCustomer();
     Customer* getACustomer();
     Product* getAProduct();
+    void displayBorrowedItems(std::vector<Product*> borrows);
 public:
     Application(UserInterface ui, DataReader d);
     ~Application();
