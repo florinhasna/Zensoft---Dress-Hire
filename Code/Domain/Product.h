@@ -1,43 +1,65 @@
-#include "Merchant.h"
+#ifndef PRODUCT_H
+#define PRODUCT_H
 
-Merchant::Merchant(const std::string& name, const std::string& email, const std::string& address, const std::string& staffID, const std::string& PIN)
-    : Person(name, email, address, staffID), 
-      PIN(PIN), 
-      staffID(staffID) {}
+#include "../Utilities/Utilities.h"
 
+class Product {
+private:
+    int productID;
+    std::string gender;
+    std::string collection;
+    std::string productType;
+    std::string productName;
+    std::string size;
+    std::string colour;
+    double dailyRentalPrice;
+    double fullPrice;
+    bool isAvailable;
+    Date borrowedAndDue;
+    std::string borrowedBy;
+    std::string getDateOfBorrowal() const;
 
-std::string Merchant::getPIN() const {
-    return PIN;
-}
+public:
+    Product(int productID, const std::string& gender, const std::string& collection,
+            const std::string& productType, const std::string& productName,
+            const std::string& size, const std::string& colour,
+            double dailyRentalPrice, double fullPrice);
 
-void Merchant::setPIN(const std::string& newPIN) {
-    PIN = newPIN;
-}
+    // Getters
+    int getProductID() const;
+    std::string getGender() const;
+    std::string getCollection() const;
+    std::string getProductType() const;
+    std::string getProductName() const;
+    std::string getProductSize() const;
+    std::string getProductColour() const;
+    double getDailyRentalPrice() const;
+    double getFullPrice() const;
+    bool getIsAvailable() const;
+    Date getBorrowedAndDue() const;
+    std::string getBorrowedBy() const;
+    std::string getDueDate() const;
 
-std::string Merchant::getStaffID() const {
-    return staffID;
-}
+    // Setters
+    void setProductID(int newProductID);
+    void setGender(const std::string& newGender);
+    void setCollection(const std::string& newCollection);
+    void setProductType(const std::string& newProductType);
+    void setProductName(const std::string& newProductName);
+    void setProductSize(const std::string& newSize);
+    void setProductColour(const std::string& newColour);
+    void setDailyRentalPrice(double newDailyRentalPrice);
+    void setFullPrice(double newFullPrice);
+    void setIsAvailable(bool newIsAvailable);
+    void setBorrowedAndDue(const Date& newDateOfBorrowal);
+    void setBorrowedBy(const std::string& ID);
+    void setDateOfBorrowal(const std::string& date);
+    void setDueDate(int rentalDays);
 
-void Merchant::setStaffID(const std::string& newStaffID) {
-    staffID = newStaffID;
-}
+    // methods
+    double calculateTotalForBorrowal(int daysBorrowed) const;
+    bool isLate() const;
+    std::string toString() const;
+};
 
-void Merchant::issueProduct(Customer* customer, Product* product) {
-    // Implementation for issuing a product to a customer
-    customer->loanProduct(product);
-    product->setIsAvailable(false);
-    product->setBorrowedBy(customer->getID());
-
-}
-
-void Merchant::returnProduct(Customer* customer, Product* product) {
-    // Implementation for returning a product from a customer
-    customer->returnProduct(product);
-    product->setIsAvailable(true);
-    product->setBorrowedBy("");
-    product->setDateOfBorrowal("");
-}
-
-void Merchant::calculateFine(Product* product) {
-    // Implementation for calculating fines
-}
+#endif 
